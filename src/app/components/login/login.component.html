@@ -1,0 +1,69 @@
+<div class="container-fluid c-bg-tpv">
+    <div *ngIf="panelNumeros; then thenBlock else elseBlock"></div>
+
+    <ng-template #thenBlock>
+
+        <div class="row">
+            <div class="offset-1 col-10 offset-sm-4 col-sm-4">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3>{{usuario.nombre}}</h3>
+                    </div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('1')">1</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('2')">2</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('3')">3</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('4')">4</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('5')">5</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('6')">6</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('7')">7</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('8')">8</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('9')">9</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('0')">0</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('')">-</button></div>
+                    <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="borrarNumero()">Borrar</button></div>
+                    <div class="col-6"> <button class="btn btn-primary w-100 my-2 "
+                                (click)="checkPassword()"
+                                [disabled]="isValidPassword()">Aceptar</button>
+                    </div>
+                    <div class="col-6"> <button class="btn btn-secondary w-100 my-2 "
+                                (click)="cancelarLogin()">Cancelar</button></div>
+                    <div class="col-12 text-center c-letter-spacing-3">
+                        <h4>{{passwordAsterisco}}</h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+
+    <ng-template #elseBlock>
+
+        <div class="w-50 m-auto">
+            <button *ngFor="let usuario of listaUsuarios" class="btn btn-dark w-100 mt-3"
+                    (click)="seleccionarUsuario(usuario.id_usuario, usuario.nombre, usuario.rango)">{{usuario.nombre}}</button>
+        </div>
+
+    </ng-template>
+
+
+
+
+    <div>
+        <button (click)="getUsuarios()" class="btn btn-danger">GET USUARIOS</button>
+        <button (click)="consoleLog()" class="btn btn-danger">CONSOLE LOG</button>
+    </div>
+</div>

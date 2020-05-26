@@ -1,0 +1,101 @@
+body {
+    background: #e8e8e8;
+}
+
+.wrap {
+    position: relative;
+    margin: 1em 0;
+}
+
+.frame {
+    height: 25vh;
+    overflow: hidden;
+}
+
+.frame ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: 2rem;
+}
+
+.frame ul li {
+    float: left;
+    width: 227px;
+    height: 100%;
+    margin: 0 1px 0 0;
+    padding: 0;
+    background: #333;
+    color: #ddd;
+    text-align: center;
+    cursor: pointer;
+}
+
+.frame ul li.active {
+    color: #fff;
+    background: #a03232;
+}
+
+/* Scrollbar */
+
+.scrollbar {
+    margin: 0 0 1em 0;
+    height: 2px;
+    background: #ccc;
+    line-height: 0;
+}
+
+.scrollbar .handle {
+    width: 100px;
+    height: 100%;
+    background: #292a33;
+    cursor: pointer;
+}
+
+.scrollbar .handle .mousearea {
+    position: absolute;
+    top: -9px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+
+/* Controls */
+
+.controls {
+    margin: 25px 0;
+    text-align: left;
+}
+
+.c-cocinero-comandas-body {
+    position: relative;
+}
+
+.c-cocinero-comandas-hora {
+    line-height: 25vh;
+}
+
+.c-table-fixed {
+    width: 100%;
+    background-color: #f3f3f3;
+}
+
+.c-table-fixed tbody {
+    height: 60vh;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.c-table-fixed thead, .c-table-fixed tbody, .c-table-fixed tr, .c-table-fixed td, .c-table-fixed th {
+    display: block;
+}
+
+.c-table-fixed tbody td {
+    float: left;
+}
+
+.c-table-fixed thead tr th {
+    float: left;
+    background-color: white;
+}

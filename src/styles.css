@@ -1,1 +1,246 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '../node_modules/font-awesome/css/font-awesome.css';
+.c-border-test1 {
+    border: 1px solid red;
+}
+
+.c-border-test2 {
+    border: 1px solid blue;
+}
+
+.c-border-test3 {
+    border: 1px solid blueviolet;
+}
+
+.c-border-test4 {
+    border: 1px solid greenyellow;
+}
+
+.c-relleno-test25 {
+    height: 25vh;
+}
+
+.c-letter-spacing-3 {
+    letter-spacing: 2.5vw;
+}
+
+.c-letter-spacing-2 {
+    letter-spacing: 1.5vw;
+}
+
+.c-letter-spacing-1 {
+    letter-spacing: 0.5vw;
+}
+
+.c-scale-hover:hover {
+    transform: scale(1.4);
+}
+
+.c-carta-div {
+    position: relative;
+    height: 20vh;
+}
+
+.c-carta-body {
+    box-sizing: content-box;
+    text-align: center;
+}
+
+.c-carta-personas {
+    position: absolute;
+    left: 0.3vw;
+    top: 0.3vh;
+}
+
+.c-carta-icons {
+    position: absolute;
+    right: 1vw;
+    top: 1vh;
+}
+
+.c-carta-mesa {
+    position: absolute;
+    left: 40%;
+    top: 20%;
+}
+
+.c-carta-basura {
+    position: absolute;
+    right: 1vw;
+    bottom: 1vh;
+}
+
+.c-carta-edit {
+    position: absolute;
+    left: 1vw;
+    bottom: 1vh;
+}
+
+.c-carta-barra {
+    box-sizing: content-box;
+    position: absolute;
+    width: 50%;
+    height: 5vh;
+    bottom: 0px;
+    background-color: grey;
+}
+
+.c-carta-cocina {
+    box-sizing: content-box;
+    position: absolute;
+    width: 50%;
+    height: 5vh;
+    bottom: 0px;
+    right: 0px;
+    background-color: grey;
+}
+
+.c-carta-add {
+    text-align: center;
+}
+
+.c-no-select {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.c-text-white {
+    color: white;
+    font-weight: 700;
+}
+
+.c-azul {
+    background-color: blue !important;
+}
+
+.c-verde {
+    background-color: green !important;
+}
+
+.c-alto-70 {
+    height: 70vh;
+}
+
+.c-alto-65 {
+    height: 65vh;
+}
+
+.c-alto-60 {
+    height: 60vh;
+}
+
+.c-alto-55 {
+    height: 55vh;
+}
+
+.c-alto-10 {
+    height: 10vh;
+}
+
+.c-alto-5 {
+    height: 5vh;
+}
+
+.c-alto-35 {
+    height: 35vh;
+}
+
+.c-alto-30 {
+    height: 30vh;
+}
+
+.c-numeros {
+    height: 5vh;
+}
+
+.table-fixed {
+    width: 100%;
+    background-color: #f3f3f3;
+}
+
+.table-fixed tbody {
+    height: 50vh;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+    display: block;
+}
+
+.table-fixed tbody td {
+    float: left;
+}
+
+.table-fixed thead tr th {
+    float: left;
+    background-color: white;
+}
+
+tr:nth-child(even)>td {
+    background-color: whitesmoke;
+}
+
+tr:nth-child(odd)>td {
+    background-color: none;
+}
+
+.c-texto-cartas {
+    font-size: 1em;
+}
+
+.c-texto-tabla {
+    font-size: 1em;
+}
+
+.c-selected-table {
+    color: red;
+}
+
+.c-bg-white {
+    background-color: white;
+}
+
+.c-bg-black {
+    background-color: grey;
+    border-radius: 5px;
+    color: whitesmoke;
+}
+
+.c-bg-tpv {
+    background-color: lightgray;
+}
+
+.c-jover:hover {
+    transform: scale(1.1);
+}
+
+.scrolling-wrapper-flexbox {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.scrolling-wrapper-flexbox .card {
+    flex: 0 0 auto;
+}
+
+.scrolling-wrapper {
+    -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+    display: none;
+}

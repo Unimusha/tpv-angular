@@ -1,0 +1,89 @@
+<div class="container-fluid ">
+    <div class="row">
+
+        <div class="col-12 c-alto-30 overflow-hidden">
+            <div class="row">
+
+                <!-- <div class="wrap">
+
+                    <div class="frame" id="basic">
+                        <ul class="clearfix">
+       
+
+
+                            <li *ngFor="let c of listaFiltradaCocina; index as index"
+                                class="c-no-select" (click)="index_comanda=index">
+
+                                <div class="c-cocinero-comandas-body">
+                                    <div class="c-carta-personas"> {{c.numero_personas}} <fa-icon
+                                            [icon]="faUserFriends"></fa-icon>
+                                    </div>
+                                    <div class="c-cocinero-comandas-hora">
+                                        <fa-icon [icon]="faClock"></fa-icon>
+                                        {{c.hora_creacion_comanda}}
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+
+
+
+                    <div class="scrollbar mt-1">
+                        <div class="handle">
+                            <div class="mousearea"></div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+<div *ngFor="let c of listaFiltradaCocina; index as index">
+    {{index + " |"}}
+</div>
+           
+
+
+
+         
+        </div>
+
+
+        <div class="offset-1 col-8 c-alto-70 ">
+
+            <table class="table c-table-fixed c-no-select c-bg-white">
+                <thead>
+                    <tr>
+                        <th class="col-2">Unidades</th>
+                        <th class="col-4">Nombre</th>
+                        <th class="col-6">Comentario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of listaFiltradaCocinaPanel;" class="c-texto-tabla ">
+                        <td class="col-2">{{c.unidades_producto}}ud.</td>
+                        <td class="col-4"> {{c.producto.nombre}} </td>
+                        <td class="col-6">
+                            <span *ngIf="c.comentario; then thenBlock else elseBlock"></span>
+                            <ng-template #thenBlock>{{c.comentario | titlecase}}</ng-template>
+                            <ng-template #elseBlock>-</ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-3 c-alto-70 bg-white ">
+            {{comandaActual.numero_personas}}
+            {{comandaActual.nombre_camarero}}
+            {{comandaActual.hora_creacion_comanda}}
+            {{comandaActual.id_comanda}}
+            <button class="btn btn-success w-100 my-2"
+                (click)="completarComandaCocina(comandaActual.id_comanda)">Llamar Camarero</button>
+            <button class="btn btn-danger w-100" (click)="redirectToHome()">Salir</button>
+            <button class="btn btn-danger w-100" (click)="getUsuarios()">getUsuarios</button>
+
+        </div>
+
+    </div>

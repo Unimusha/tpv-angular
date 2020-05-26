@@ -1,0 +1,181 @@
+<h3 class="text-center">Vista de Camarero con id: {{id_usuario}}</h3>
+
+<div class="container-fluid c-bg-tpv">
+    <div class="row">
+
+        <div class="col-6 col-sm-3 col-lg-2 my-2 " *ngFor="let m of usuario.mesas;let i=index">
+            <div class="card c-carta-div overflow-hidden" style="border-radius: 20px;">
+                <div class="card-body c-carta-body m-0 p-0">
+
+                    <div class="c-carta-personas c-no-select">{{m.numero_personas}} <fa-icon
+                            [icon]="faUserFriends"></fa-icon>
+                    </div>
+
+
+                    <div *ngIf="m.comandas[0]; then thenBlock else elseBlock"></div>
+
+                    <ng-template #thenBlock>
+                        <div class="c-carta-icons c-scale-hover">
+                            <fa-icon [icon]="faCoins" data-toggle="modal" data-target="#pagadoModal"
+                                (click)="asignarValor(i)"></fa-icon>
+                        </div>
+                        <div class="c-carta-mesa">
+                            <fa-icon [icon]="faBreadSlice" size="3x"></fa-icon>
+                            <span class="fa-layers-text fa-inverse c-no-select"
+                                style="font-weight:900; bottom: 10px;">{{m.numero_mesa}}</span>
+                        </div>
+                        <div class="c-carta-barra c-no-select c-text-white"
+                            [ngClass]="{'c-azul': m.comandas[0].completado_barra}">Barra</div>
+                        <div class="c-carta-cocina c-no-select c-text-white"
+                            [ngClass]="{'c-verde': m.comandas[0].completado_cocina}">Cocina
+                        </div>
+                    </ng-template>
+
+                    <ng-template #elseBlock>
+                        <div class="c-carta-mesa c-scale-hover ">
+                            <fa-icon [icon]="faBreadSlice" size="3x" (click)="goTpv(i)"></fa-icon>
+                            <span class="fa-layers-text fa-inverse c-no-select"
+                                style="font-weight:900; bottom: 10px;"
+                                (click)="goTpv(i)">{{m.numero_mesa}}</span>
+                        </div>
+                        <fa-icon [icon]="faTrash" class="c-carta-basura c-scale-hover"
+                            data-toggle="modal" data-target="#deleteModal"
+                            (click)="asignarValor(i)"></fa-icon>
+                        <fa-icon [icon]="faUserEdit" class="c-carta-edit c-scale-hover"
+                            data-toggle="modal" data-target="#editModal" (click)="asignarValor(i)">
+                        </fa-icon>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-3 col-lg-2 my-2 ">
+            <div class="card c-carta-div" style="border-radius: 20px;">
+                <div class="card-body text-center c-scale-hover">
+                    <fa-icon [icon]="faPlus" size="4x" class="c-scale-hover" data-toggle="modal"
+                        data-target="#addModal"></fa-icon>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal BORRAR-->
+        <div id="deleteModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Desea borrar la mesa?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            (click)="deleteMesa()">Aceptar</button>
+                        <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Modal EDIT -->
+        <div id="editModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title c-no-select">Editar la mesa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-6"> <span class="c-no-select">Número de mesa</span>
+                            </div>
+                            <div class="col-6"> <input class="input w-50" type="text"
+                                    [(ngModel)]="mesa.numero_mesa"></div>
+                            <div class="col-6"> <span class="c-no-select">Número de personas</span>
+                            </div>
+                            <div class="col-6"> <input class="input w-50" type="text"
+                                    [(ngModel)]="mesa.numero_personas"></div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            (click)="editMesa()">Aceptar</button>
+                        <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal PAGADO-->
+        <div id="pagadoModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Has pagado la cuenta</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>TO DO Factura</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            (click)="deleteComanda()">Aceptar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- Modal ADD -->
+        <div id="addModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title c-no-select">Añadir una mesa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="col-6"> <span class="c-no-select">Número de mesa</span>
+                            </div>
+                            <div class="col-6"> <input class="input w-50" type="text"
+                                    [(ngModel)]="mesa.numero_mesa"></div>
+                            <div class="col-6"> <span class="c-no-select">Número de personas</span>
+                            </div>
+                            <div class="col-6"> <input class="input w-50" type="text"
+                                    [(ngModel)]="mesa.numero_personas"></div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            (click)="addMesa()">Aceptar</button>
+                        <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!--CIERRE ROW -->
+</div>
+<!--CIERRE CONTAINER-FLUID -->
+
+
+<button class="btn btn-danger" (click)="redirectToHome()">Volver a Home</button>

@@ -1,0 +1,184 @@
+<div class="container-fluid mt-0 p-0 overflow-hidden c-bg-tpv">
+    <div class="row ">
+        <div class="col-12">
+            <div class="row c-alto-60 ">
+                <div class="col-12 col-lg-9 c-alto-60">
+                    <!--TPV -->
+
+
+                    <table class="table table-fixed c-no-select c-bg-white">
+                        <thead>
+                            <tr>
+                                <th class="col-1">Unidades</th>
+                                <th class="col-3">Nombre</th>
+                                <th class="col-6">Comentario</th>
+                                <th class="col-1">Precio</th>
+                                <th class="col-1">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let t of tabla; index as index;" class="c-texto-tabla "
+                                (click)="selected = index"
+                                [ngClass]="{'c-selected-table': selected == index}">
+                                <td class="col-1">{{t.unidades}}ud.</td>
+                                <td class="col-3">{{t.nombre | titlecase}}</td>
+                                <td class="col-6">
+
+                                    <span
+                                        *ngIf="t.comentario; then thenBlock else elseBlock"></span>
+                                    <ng-template #thenBlock>{{t.comentario | titlecase}}</ng-template>
+                                    <ng-template #elseBlock>-</ng-template>
+
+                                </td>
+                                <td class="col-1">{{t.precio | number:'1.2-2'}}€</td>
+                                <td class="col-1">{{t.subtotal | number:'1.2-2'}}€</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+
+
+
+                <div class="d-none d-lg-flex col-3">
+                    <!--MENU DERECHA -->
+                    <div class="row">
+                        <div
+                            class="offset-1 col-10 text-center c-letter-spacing-1 c-numeros border border-black my-3">
+                            <h4 class="c-no-select">{{numeros}}</h4>
+                        </div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('1')">1</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('2')">2</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('3')">3</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('4')">4</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('5')">5</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('6')">6</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('7')">7</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('8')">8</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('9')">9</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('0')">0</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="pulsarNumero('')">-</button></div>
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                                (click)="borrarNumero()">Borrar</button></div>
+                        <div class="col-6"> <button class="btn btn-primary w-100 my-2 "
+                                (click)="addComanda()"
+                                [disabled]="tabla.length <= 0">Enviar</button>
+                        </div>
+                        <div class="col-6"> <button class="btn btn-secondary w-100 my-2 "
+                                (click)="anularProductos()"
+                                [disabled]="tabla.length <= 0">Anular</button>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-danger w-50"
+                                (click)="redirectToCamarero()">Volver</button>
+                            <button class="btn btn-danger w-50" data-toggle="modal"
+                                data-target="#comentarioModal">Comentario</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row c-alto-5 c-no-select">
+
+                <div class="col-9">
+                    <ul class="c-bg-black list-group list-group-horizontal list-unstyled">
+                        <li class="list-item ml-1 mr-5">Mesa: {{mesa.numero_mesa}}</li>
+                        <li class="list-item">Empleado: {{usuario.nombre}}</li>
+                    </ul>
+                </div>
+                <div class="col-3 text-center c-no-select">
+                    <h4>TOTAL: {{getTotal() | number:'1.2-2'}}€</h4>
+                </div>
+            </div>
+
+
+            <!--CATEGORIAS -->
+            <div class="row c-alto-35 pt-3">
+                <div class="col-4 pr-5">
+                    <div class="row">
+
+                        <div class="col-4 m-0 p-2 c-jover"
+                            *ngFor="let c of categorias; index as index"
+                            (click)="cambiarCategoriaActual(index)">
+                            <div class="card w-100 d-flex align-items-center">
+                                <div class="card-body">
+                                    <p class="card-title c-no-select c-texto-cartas">
+                                        {{c.nombre | titlecase}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-8 pl-5">
+                    <div class="row">
+
+                        <div class="col-2 m-0 p-2 c-jover"
+                            *ngFor="let p of categorias[categoriaActual].productos; index as index;">
+                            <div class="card w-100 d-flex align-items-center"
+                                (click)="addProductoTabla(p.id_producto, p.nombre, p.precio)">
+                                <div class="card-body">
+                                    <p class="card-title c-no-select">{{p.nombre | titlecase}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MODALS -->
+
+
+        <div id="comentarioModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title c-no-select">Añadir un comentario al producto</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12"> <span class="c-no-select">Comentario</span></div>
+                            <div class="col-12">
+                                <textarea rows="4" cols="50" autofocus [(ngModel)]="comentario"></textarea>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                (click)="addComentario()">Aceptar</button>
+                            <button type="button" class="btn btn-primary"
+                                data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+        <!--CIERRE ROW -->
+
+        <!--CIERRE CONTAINER-FLUID -->
