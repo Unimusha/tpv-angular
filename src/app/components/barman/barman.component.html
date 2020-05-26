@@ -1,4 +1,133 @@
-<div class="container-fluid c-bg-tpv">
-    <h3 class="text-center">Vista de Barman con id: {{id_usuario}}</h3>
-    <button class="btn btn-danger" (click)="redirectToHome()">Volver a Home</button>
-</div>
+<div class="container-fluid ">
+    <div class="row">
+
+        <div class="col-12 c-alto-30">
+            <div class="row">
+                <div class="col-12 c-alto-30">
+
+                    <ul class="d-flex c-no-select overflow-auto ">
+                        <li *ngFor="let c of listaFiltradaBarra; index as index" class="col-1 m-1"
+                            (click)="selected=index"
+                            [ngClass]="{'c-selected-list-item': selected == index}">
+
+
+                            <div class="c-cocinero-comandas-body">
+                                <div class="c-carta-personas"> {{c.numero_personas}} <fa-icon
+                                        [icon]="faUserFriends">
+                                    </fa-icon>
+                                </div>
+                                <div class="c-cocinero-comandas-hora">
+                                    <fa-icon [icon]="faClock"></fa-icon>
+                                    {{c.hora_creacion_comanda}}
+                                </div>
+
+                            </div>
+                        </li>
+<!-- 
+                        <li class="col-1 m-1" *ngFor="let c of listaUsuarios; index as index">
+                            {{index}}
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="offset-1 col-8 c-alto-70 ">
+
+            <table class="table c-table-fixed c-no-select c-bg-white">
+                <thead>
+                    <tr>
+                        <th class="col-2">Unidades</th>
+                        <th class="col-4">Nombre</th>
+                        <th class="col-6">Comentario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of filtrarComandaBarraPanel();" class="c-texto-tabla ">
+                        <td class="col-2">{{c.unidades_producto}}ud.</td>
+                        <td class="col-4"> {{c.producto.nombre}} </td>
+                        <td class="col-6">
+                            <span *ngIf="c.comentario; then thenBlock else elseBlock"></span>
+                            <ng-template #thenBlock>{{c.comentario | titlecase}}</ng-template>
+                            <ng-template #elseBlock>-</ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-2 c-alto-60 bg-white ">
+
+            <div> {{comandaActual.numero_personas}} <fa-icon [icon]="faUserFriends">
+                </fa-icon>
+                <div>
+                    <div>
+                        <fa-icon [icon]="faClock"></fa-icon>
+                        {{comandaActual.hora_creacion_comanda}}
+                    </div>
+                    {{comandaActual.nombre_camarero}}
+
+
+                    <button class="btn btn-success w-100 my-2" data-toggle="modal"
+                        data-target="#completarComandaCocinaModal">Llamar
+                        Camarero</button>
+                    <button class="btn btn-danger w-100" data-toggle="modal"
+                        data-target="#salirModal">Salir</button>
+                </div>
+            </div>
+
+
+            <div id="completarComandaCocinaModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title c-no-select">Comanda lista para recojer</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12"> <span class="c-no-select">¿Desea llamar al
+                                        camarero {{comandaActual.nombre_camarero}}?</span></div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    (click)="completarComandaBarra(comandaActual.id_comanda)">Aceptar</button>
+                                <button type="button" class="btn btn-primary"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="salirModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title c-no-select">Volver al inicio</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12"> <span class="c-no-select">¿Está seguro de
+                                        querer volver al inicio?</span></div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    (click)="redirectToHome()">Aceptar</button>
+                                <button type="button" class="btn btn-primary"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>

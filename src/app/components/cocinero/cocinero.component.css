@@ -2,70 +2,33 @@ body {
     background: #e8e8e8;
 }
 
-.wrap {
-    position: relative;
-    margin: 1em 0;
+ul {
+   
+    scroll-behavior: smooth;
 }
 
-.frame {
-    height: 25vh;
-    overflow: hidden;
-}
-
-.frame ul {
+ul {
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 100%;
-    font-size: 2rem;
+
+    font-size: 1.5rem;
 }
 
-.frame ul li {
-    float: left;
-    width: 227px;
-    height: 100%;
-    margin: 0 1px 0 0;
+ul li {
+   
     padding: 0;
     background: #333;
     color: #ddd;
     text-align: center;
     cursor: pointer;
 }
-
-.frame ul li.active {
-    color: #fff;
-    background: #a03232;
+li{ 
+    height: 25vh;
 }
 
-/* Scrollbar */
-
-.scrollbar {
-    margin: 0 0 1em 0;
-    height: 2px;
-    background: #ccc;
-    line-height: 0;
-}
-
-.scrollbar .handle {
-    width: 100px;
-    height: 100%;
-    background: #292a33;
-    cursor: pointer;
-}
-
-.scrollbar .handle .mousearea {
-    position: absolute;
-    top: -9px;
-    left: 0;
-    width: 100%;
-    height: 20px;
-}
-
-/* Controls */
-
-.controls {
-    margin: 25px 0;
-    text-align: left;
+.c-selected-list-item {
+    background: #a03232 !important;
 }
 
 .c-cocinero-comandas-body {
@@ -99,3 +62,6 @@ body {
     float: left;
     background-color: white;
 }
+
+/* width */
+

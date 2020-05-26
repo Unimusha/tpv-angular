@@ -90,4 +90,10 @@ export class PeticionesService {
 
         return this._http.patch(this.url + "api/comandas/completadoCocina/" + id_comanda, { headers: headers })
     }
+    completarComandaBarra(id_comanda) {
+
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+        return this._http.patch(this.url + "api/comandas/completadoBarra/" + id_comanda, { headers: headers })
+    }
 }

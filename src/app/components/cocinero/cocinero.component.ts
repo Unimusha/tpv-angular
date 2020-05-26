@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router'
 import { PeticionesService } from '../../services/peticiones.service'
 import { faUserFriends, faClock } from '@fortawesome/free-solid-svg-icons';
-
 import { Usuario } from 'src/app/models/usuario.model';
 
 
@@ -18,14 +17,14 @@ export class CocineroComponent implements OnInit {
   faUserFriends = faUserFriends;
   faClock = faClock;
   id_usuario: number;
-  index_comanda: number;
+  selected: number;
 
 
   usuario: any;
   listaUsuarios: any;
   listaComandas: any;
   comandaActual: any;
-  listaTesteo: any;
+
   listaFiltradaCocina: any;
   listaFiltradaCocinaPanel: any;
 
@@ -37,8 +36,8 @@ export class CocineroComponent implements OnInit {
     this.listaUsuarios = new Usuario(null, null, null, null)
     this.listaComandas = [];
     this.comandaActual = [];
-    this.index_comanda = 0;
-    this.listaTesteo = [];
+    this.selected = 0;
+   
     this.listaFiltradaCocina = 0;
     this.listaFiltradaCocinaPanel = 0;
 
@@ -48,11 +47,7 @@ export class CocineroComponent implements OnInit {
     this.id_usuario = this._route.snapshot.params.id;
     this.getUsuario();
     this.getUsuarios();
-  //  setInterval(this.getUsuarios, 5000);
-
-    setInterval(() => {
-      this.getUsuarios();
-    }, 5000);
+    setInterval(() => { this.getUsuarios(); }, 5000);
   }
   getUsuario() {
     this._peticionesService.getUsuario(this.id_usuario).subscribe(
@@ -105,17 +100,15 @@ export class CocineroComponent implements OnInit {
       }
     }
     this.filterComandasCocina()
-    this.filtrarComandaCocinaPanel()
 
-    console.log(this.listaComandas)
   }
 
   filtrarComandaCocinaPanel() {
-    this.comandaActual = this.listaFiltradaCocina[this.index_comanda];
+    this.comandaActual = this.listaFiltradaCocina[this.selected];
     console.log(this.comandaActual)
     var self = this;
 
-    this.listaFiltradaCocinaPanel = self.comandaActual.comandasProductos.filter(function (c) {
+    return this.comandaActual.comandasProductos.filter(function (c) {
       if (c.producto.cocina) {
         return c
       }
@@ -138,6 +131,10 @@ export class CocineroComponent implements OnInit {
     console.log(this.listaFiltradaCocina)
   }
 
+
+  modalCompletarComandaCocina(){
+
+  }
   completarComandaCocina(id_comanda) {
     console.log(id_comanda)
     this._peticionesService.completarComandaCocina(id_comanda).subscribe(
@@ -149,6 +146,7 @@ export class CocineroComponent implements OnInit {
       },
       () => {
         this.getUsuarios()
+        this.selected = this.selected - 1;
       }
     );
 

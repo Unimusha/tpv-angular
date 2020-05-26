@@ -1,6 +1,6 @@
 <h3 class="text-center">Vista de Camarero con id: {{id_usuario}}</h3>
 
-<div class="container-fluid c-bg-tpv">
+<div class="container-fluid">
     <div class="row">
 
         <div class="col-6 col-sm-3 col-lg-2 my-2 " *ngFor="let m of usuario.mesas;let i=index">
@@ -171,6 +171,33 @@
             </div>
         </div>
 
+        <div id="salirModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+        
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title c-no-select">Volver al inicio</h4>
+                    </div>
+        
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12"> <span class="c-no-select">¿Está seguro de querer volver al
+                                    inicio?</span></div>
+        
+        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                (click)="redirectToHome()">Aceptar</button>
+                            <button type="button" class="btn btn-primary"
+                                data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
     <!--CIERRE ROW -->
@@ -178,4 +205,5 @@
 <!--CIERRE CONTAINER-FLUID -->
 
 
-<button class="btn btn-danger" (click)="redirectToHome()">Volver a Home</button>
+<button class="btn btn-danger" data-toggle="modal"
+                        data-target="#salirModal">Volver a Home</button>

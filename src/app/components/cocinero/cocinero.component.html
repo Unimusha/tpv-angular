@@ -1,55 +1,33 @@
 <div class="container-fluid ">
     <div class="row">
 
-        <div class="col-12 c-alto-30 overflow-hidden">
+        <div class="col-12 c-alto-30">
             <div class="row">
+                <div class="col-12 c-alto-30">
 
-                <!-- <div class="wrap">
+                    <ul class="d-flex c-no-select overflow-auto ">
+                        <li *ngFor="let c of listaFiltradaCocina; index as index" class="col-1 m-1"
+                            (click)="selected=index"
+                            [ngClass]="{'c-selected-list-item': selected == index}">
 
-                    <div class="frame" id="basic">
-                        <ul class="clearfix">
-       
 
-
-                            <li *ngFor="let c of listaFiltradaCocina; index as index"
-                                class="c-no-select" (click)="index_comanda=index">
-
-                                <div class="c-cocinero-comandas-body">
-                                    <div class="c-carta-personas"> {{c.numero_personas}} <fa-icon
-                                            [icon]="faUserFriends"></fa-icon>
-                                    </div>
-                                    <div class="c-cocinero-comandas-hora">
-                                        <fa-icon [icon]="faClock"></fa-icon>
-                                        {{c.hora_creacion_comanda}}
-                                    </div>
-
+                            <div class="c-cocinero-comandas-body">
+                                <div class="c-carta-personas"> {{c.numero_personas}} <fa-icon
+                                        [icon]="faUserFriends">
+                                    </fa-icon>
                                 </div>
-                            </li>
-                        </ul>
+                                <div class="c-cocinero-comandas-hora">
+                                    <fa-icon [icon]="faClock"></fa-icon>
+                                    {{c.hora_creacion_comanda}}
+                                </div>
 
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-
-
-                    <div class="scrollbar mt-1">
-                        <div class="handle">
-                            <div class="mousearea"></div>
-                        </div>
-                    </div>
-                </div> -->
-
-
-<div *ngFor="let c of listaFiltradaCocina; index as index">
-    {{index + " |"}}
-</div>
-           
-
-
-
-         
         </div>
-
-
         <div class="offset-1 col-8 c-alto-70 ">
 
             <table class="table c-table-fixed c-no-select c-bg-white">
@@ -61,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let c of listaFiltradaCocinaPanel;" class="c-texto-tabla ">
+                    <tr *ngFor="let c of filtrarComandaCocinaPanel();" class="c-texto-tabla ">
                         <td class="col-2">{{c.unidades_producto}}ud.</td>
                         <td class="col-4"> {{c.producto.nombre}} </td>
                         <td class="col-6">
@@ -74,16 +52,77 @@
             </table>
 
         </div>
-        <div class="col-3 c-alto-70 bg-white ">
-            {{comandaActual.numero_personas}}
-            {{comandaActual.nombre_camarero}}
-            {{comandaActual.hora_creacion_comanda}}
-            {{comandaActual.id_comanda}}
-            <button class="btn btn-success w-100 my-2"
-                (click)="completarComandaCocina(comandaActual.id_comanda)">Llamar Camarero</button>
-            <button class="btn btn-danger w-100" (click)="redirectToHome()">Salir</button>
-            <button class="btn btn-danger w-100" (click)="getUsuarios()">getUsuarios</button>
+        <div class="col-2 c-alto-60 bg-white ">
 
-        </div>
+            <div> {{comandaActual.numero_personas}} <fa-icon [icon]="faUserFriends">
+                </fa-icon>
+                <div>
+                    <div>
+                        <fa-icon [icon]="faClock"></fa-icon>
+                        {{comandaActual.hora_creacion_comanda}}
+                    </div>
+                    {{comandaActual.nombre_camarero}}
 
-    </div>
+                   
+                    <button class="btn btn-success w-100 my-2" data-toggle="modal"
+                        data-target="#completarComandaCocinaModal">Llamar
+                        Camarero</button>
+                    <button class="btn btn-danger w-100" data-toggle="modal"
+                        data-target="#salirModal">Salir</button>
+                </div>
+            </div>
+
+
+            <div id="completarComandaCocinaModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title c-no-select">Comanda lista para recojer</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12"> <span class="c-no-select">¿Desea llamar al
+                                        camarero {{comandaActual.nombre_camarero}}?</span></div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    (click)="completarComandaCocina(comandaActual.id_comanda)">Aceptar</button>
+                                <button type="button" class="btn btn-primary"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="salirModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+            
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title c-no-select">Volver al inicio</h4>
+                        </div>
+            
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12"> <span class="c-no-select">¿Está seguro de querer volver al inicio?</span></div>
+            
+            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    (click)="redirectToHome()">Aceptar</button>
+                                <button type="button" class="btn btn-primary"
+                                    data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
