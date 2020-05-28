@@ -33,6 +33,17 @@ export class PeticionesService {
 
         return this._http.post(this.url + "api/usuarios", json, { headers: headers })
     }
+    editUsuario(id, usuario) {
+        let json = JSON.stringify(usuario);
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+        return this._http.patch(this.url + "api/usuarios/" + id, json, { headers: headers })
+    }
+    deleteUsuario(id): Observable<any> {
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+        return this._http.delete(this.url + "api/usuarios/" + id, { headers: headers })
+    }
+
     getMesa(idMesa): Observable<any> {
         return this._http.get(this.url + 'api/mesas/' + idMesa)
     }
@@ -70,6 +81,49 @@ export class PeticionesService {
         let headers = new HttpHeaders().set("Content-Type", "application/json");
         return this._http.get(this.url + 'api/categorias', { headers: headers })
     }
+
+    addCategoria(categoria) {
+        let json = JSON.stringify(categoria);
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+        return this._http.post(this.url + "api/categorias", json, { headers: headers })
+    }
+    editCategoria(id, categoria) {
+        let json = JSON.stringify(categoria);
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+        return this._http.patch(this.url + "api/categorias/" + id, json, { headers: headers })
+    }
+    deleteCategoria(id): Observable<any> {
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+        return this._http.delete(this.url + "api/categorias/" + id, { headers: headers })
+    }
+
+    getProductos(): Observable<any> {
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+        return this._http.get(this.url + 'api/productos', { headers: headers })
+    }
+
+
+
+    addProducto(producto) {
+        let json = JSON.stringify(producto);
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+
+        return this._http.post(this.url + "api/productos", json, { headers: headers })
+    }
+
+    editProducto(id, producto) {
+        let json = JSON.stringify(producto);
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+        return this._http.patch(this.url + "api/productos/" + id, json, { headers: headers })
+    }
+
+    deleteProducto(id): Observable<any> {
+        let headers = new HttpHeaders().set("Content-Type", "application/json");
+        return this._http.delete(this.url + "api/productos/" + id, { headers: headers })
+    }
+
 
     addComandaProductoList(listaComandaProductos){
         let json = JSON.stringify(listaComandaProductos);

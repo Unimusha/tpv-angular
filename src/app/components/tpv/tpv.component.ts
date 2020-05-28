@@ -84,6 +84,7 @@ export class TpvComponent implements OnInit {
       }
     );
   }
+
   getMesa() {
     this._peticionesService.getMesa(this.id_mesa).subscribe(
       result => {

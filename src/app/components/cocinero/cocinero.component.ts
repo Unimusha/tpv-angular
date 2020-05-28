@@ -37,6 +37,7 @@ export class CocineroComponent implements OnInit {
     this.listaComandas = [];
     this.comandaActual = [];
     this.selected = 0;
+
    
     this.listaFiltradaCocina = 0;
     this.listaFiltradaCocinaPanel = 0;

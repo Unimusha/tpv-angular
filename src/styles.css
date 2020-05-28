@@ -129,6 +129,10 @@
     background-color: green !important;
 }
 
+.c-alto-80 {
+    height: 80vh;
+}
+
 .c-alto-70 {
     height: 70vh;
 }
@@ -143,6 +147,10 @@
 
 .c-alto-55 {
     height: 55vh;
+}
+
+.c-alto-20 {
+    height: 20vh;
 }
 
 .c-alto-10 {
@@ -225,6 +233,11 @@ tr:nth-child(odd)>td {
 
 .c-jover:hover {
     transform: scale(1.1);
+    cursor: pointer;
+}
+
+.c-cursor-pointer {
+    cursor: pointer;
 }
 
 .scrolling-wrapper-flexbox {
@@ -265,4 +278,12 @@ tr:nth-child(odd)>td {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.c-form-alert {
+    color: red!important;
+}
+
+.c-capitalize {
+    text-transform: capitalize;
 }

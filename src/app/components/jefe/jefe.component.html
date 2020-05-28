@@ -1,10 +1,240 @@
-<div class="container-fluid c-bg-tpv">
-    <h3 class="text-center">Vista de Jefe con id: {{id_usuario}}</h3>
-    <button class="btn btn-danger" data-toggle="modal"
-                        data-target="#salirModal">Volver a Home</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 c-alto-20">
+            <div class="row">
+
+                <ul class="col-12 d-flex c-no-select">
+                    <li class="col-4">
+                        <div (click)="cambiarSeleccion(0, 'Productos')"
+                            [ngClass]="{'c-selected-list-item': selected == 0}">
+                            Productos</div>
+                    </li>
+                    <li class="col-4">
+                        <div (click)="cambiarSeleccion(1, 'Categorías')"
+                            [ngClass]="{'c-selected-list-item': selected == 1}">
+                            Categorías</div>
+                    </li>
+                    <li class="col-4">
+                        <div (click)="cambiarSeleccion(2, 'Empleados')"
+                            [ngClass]="{'c-selected-list-item': selected == 2}">
+                            Empleados</div>
+                    </li>
+                </ul>
+            </div>
 
 
-    
+        </div>
+        <div [ngSwitch]="vistaJefe" class="col-12 c-alto-80">
+            <div class="row">
+                <div class="col-12">
+                    <!-- VISTA PRODUCTOS -->
+                    <div *ngSwitchCase="'Productos'">
+
+
+                        <div class="row my-3">
+                            <button class="btn btn-primary col-3"
+                                (click)="openCreateModalProducto()">Crear
+                                Producto</button>
+                            <select class="input col-3" name="select"
+                                [(ngModel)]="filterByDepartamentoProductoString">
+                                <option value="barraAndCocina">Barra y Cocina</option>
+                                <option value="barra">Barra</option>
+                                <option value="cocina">Cocina</option>
+                            </select>
+                            <input class="input col-3" type="text"
+                                [(ngModel)]="filterByNombreProductoString"
+                                placeholder="Filtrar por Nombre">
+                            <input class="input col-3" type="text"
+                                [(ngModel)]="filterByCategoriaProductoString"
+                                placeholder="Filtrar por Categoría">
+                        </div>
+
+
+                        <table class="table c-table-fixed c-no-select c-bg-white">
+                            <thead>
+                                <tr>
+                                    <th class="col-3">Nombre</th>
+                                    <th class="col-3">Categoría</th>
+                                    <th class="col-2">Precio</th>
+                                    <th class="col-2">Departamento</th>
+                                    <th class="col-1">#</th>
+                                    <th class="col-1">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let p of filterListaProductos(); trackBy:listaProductos.id_producto; index as index"
+                                    (click)="selectedTable = index">
+                                    <td class="col-3">{{p.nombre | titlecase}}</td>
+                                    <td class="col-3">{{p.id_categoria}}</td>
+                                    <td class="col-2">{{p.precio | number:'1.2-2'}} €</td>
+                                    <td class="col-2">
+                                        <div
+                                            *ngIf="p.barra && !p.cocina; then thenBlock else elseBlock">
+                                        </div>
+                                        <ng-template #thenBlock>Barra</ng-template>
+                                        <ng-template #elseBlock>Cocina</ng-template>
+                                    </td>
+                                    <td class="col-1">
+                                        <div class="c-cursor-pointer">
+                                            <fa-icon [icon]="faEdit"
+                                                (click)="openEditModalProducto(
+                                                     p.nombre, p.id_categoria, p.precio, p.barra, p.cocina, p.id_producto)">
+                                            </fa-icon>
+                                        </div>
+                                    </td>
+                                    <td class="col-1">
+                                        <div class="c-cursor-pointer">
+                                            <fa-icon [icon]="faTrash" (click)="openDeleteModalProducto(
+                                                 p.id_producto, p.nombre)">>
+                                            </fa-icon>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-danger w-25" data-toggle="modal"
+                            data-target="#salirModal">Volver
+                            a Home</button>
+
+
+                    </div>
+
+                    <!-- VISTA CATEGORÍAS -->
+                    <div *ngSwitchCase="'Categorías'">
+
+
+                        <div class="row my-3">
+                            <button class="btn btn-primary col-3"
+                                (click)="openCreateModalCategoria()">Crear
+                                Categoría</button>
+                            <input class="input col-3" type="text"
+                                [(ngModel)]="filterByNombreCategoriaString"
+                                placeholder="Filtrar por Nombre">
+                            <input class="input col-3" type="number"
+                                [(ngModel)]="filterByCantidadCategoriaNumber"
+                                placeholder="Filtrar por Cantidad de Productos">
+                        </div>
+
+                        <table class="table c-table-fixed c-no-select c-bg-white">
+                            <thead>
+                                <tr>
+                                    <th class="col-3">Nombre</th>
+                                    <th class="col-7">Cantidad de Productos</th>
+                                    <th class="col-1">#</th>
+                                    <th class="col-1">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let c of filterListaCategorias(); 
+                                    trackBy:listaCategorias.id_categoria; index as index">
+                                    <td class="col-3">{{c.nombre}}</td>
+                                    <td class="col-7">{{c.productos.length}}</td>
+                                    <td class="col-1">
+                                        <div class="c-cursor-pointer">
+                                            <fa-icon [icon]="faEdit"
+                                                (click)="openEditModalCategoria(c.id_categoria,c.nombre)">
+                                            </fa-icon>
+                                        </div>
+                                    </td>
+                                    <td class="col-1">
+
+                                        <div class="c-cursor-pointer">
+                                            <fa-icon [icon]="faTrash"
+                                                (click)="openDeleteModalCategoria(c.id_categoria,c.nombre)">
+                                            </fa-icon>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-danger" data-toggle="modal"
+                            data-target="#salirModal">Volver
+                            a Home</button>
+
+
+                    </div>
+
+                    <!-- VISTA EMPLEADOS -->
+                    <div *ngSwitchCase="'Empleados'">
+
+                        <div class="row my-3">
+                            <button class="btn btn-primary col-3"
+                                (click)="openCreateModalUsuario()">Crear
+                                Empleado</button>
+                            <select class="input col-3" name="select"
+                                [(ngModel)]="filterByRangoEmpleadoString">
+                                <option value="todosEmpleados" selected>Todos los Empleados</option>
+                                <option value="jefe">Jefe</option>
+                                <option value="camarero">Camarero</option>
+                                <option value="barman">Barman</option>
+                                <option value="cocinero">Cocinero</option>
+                            </select>
+
+                            <input class="input col-3" type="text"
+                                [(ngModel)]="filterByNombreEmpleadoString"
+                                placeholder="Filtrar por Nombre">
+                            <input class="input col-3" type="text"
+                                [(ngModel)]="filterByApellidosEmpleadoString"
+                                placeholder="Filtrar por Apellidos">
+                        </div>
+
+
+                        <table class="table c-table-fixed c-no-select c-bg-white">
+                            <thead>
+                                <tr>
+                                    <th class="col-2">Nombre</th>
+                                    <th class="col-1">Rango</th>
+                                    <th class="col-2">Email</th>
+
+                                    <th class="col-5">Contraseña</th>
+
+                                    <th class="col-1">#</th>
+                                    <th class="col-1">#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let u of filterListaEmpleados(); trackBy:listaUsuarios.id_usuario; index as index">
+                                    <td class="col-2">{{u.nombre +" "+u.apellidos}}</td>
+                                    <td class="col-1">
+                                        <div [ngSwitch]="u.rango">
+                                            <div *ngSwitchCase="0">Jefe</div>
+                                            <div *ngSwitchCase="1">Camarero</div>
+                                            <div *ngSwitchCase="2">Barman</div>
+                                            <div *ngSwitchCase="3">Cocinero</div>
+                                            <div *ngSwitchDefault>-</div>
+                                        </div>
+                                    </td>
+                                    <td class="col-2">{{u.email}}</td>
+
+                                    <td class="col-5">{{u.contrasenia}}</td>
+
+                                    <td class="col-1">Edit</td>
+                                    <td class="col-1">Delete</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <button class="btn btn-danger" data-toggle="modal"
+                            data-target="#salirModal">Volver
+                            a Home</button>
+
+                    </div>
+
+
+                    <div *ngSwitchDefault>Soy la vista de default
+                        <button class="btn btn-danger" data-toggle="modal"
+                            data-target="#salirModal">Volver
+                            a Home</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 </div>
 
 
@@ -34,3 +264,297 @@
         </div>
     </div>
 </div>
+
+
+<div id="createProductoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Crear Producto</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="offset-1 col-10">
+                        <div class="row">
+                            <form #createProductoForm="ngForm">
+
+                                <label for="nombre" class="col-3">Nombre</label>
+                                <input type="text" name="nombre" id="inputNombreProducto"
+                                    #nombre="ngModel" [(ngModel)]="producto.nombre" required
+                                    maxlength="25" class="input col-8">
+
+
+
+                                <label for="precio" class="col-3">Precio</label>
+                                <input type="number" name="precio" #precio="ngModel"
+                                    [(ngModel)]="producto.precio" required class="input col-8">
+
+                                <div *ngIf="precio.touched && !precio.valid"
+                                    class="alert alert-danger">
+                                    El precio es obligatorio</div>
+
+
+                                <label class="col-3" for="categoria">Categoría
+                                </label>
+
+                                <select class="col-8" id="categoria" name="categoria"
+                                    #categoria="ngModel" [(ngModel)]="producto.id_categoria">
+                                    <option
+                                        *ngFor="let c of listaCategorias; trackBy:listaCategorias.id_categoria"
+                                        value="{{c.id_categoria}}"> {{c.nombre}}</option>
+                                </select>
+
+                                <div *ngIf="categoria.touched && producto.id_categoria==null"
+                                    class="alert alert-danger">
+                                    Debe elegir una categoría
+                                </div>
+
+                                <label class="col-12" for="barra">¿El producto es de barra o cocina?
+                                </label>
+
+                                <span class="offset-1 col-4 "> <input class="input" id="barra"
+                                        type="radio" name="barraCocina"
+                                        (click)="setBarraCocina(true, false)"><label
+                                        for="barra"><strong>Barra</strong></label></span>
+
+
+                                <input class="input" id="cocina" type="radio" name="barraCocina"
+                                    (click)="setBarraCocina(false, true)"><label
+                                    for="cocina"><strong>Cocina</strong></label>
+
+                                <div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="addProducto(createProductoForm)"
+                        [disabled]="createProductoForm.form.invalid 
+                    || producto.id_categoria==null || producto.barra == null ||producto.cocina == null" class="btn btn-secondary">Crear</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="createProductoForm.reset()" data-dismiss="modal">Cancelar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editProductoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Crear Producto</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="offset-1 col-10">
+                        <div class="row">
+                            <form #editProductoForm="ngForm">
+
+                                <label for="nombre" class="col-3">Nombre</label>
+                                <input type="text" name="nombre" id="inputNombreProductoEdit"
+                                    #nombre="ngModel" [(ngModel)]="producto.nombre" required
+                                    maxlength="25" class="input col-8">
+
+                                <div *ngIf="nombre.touched && !nombre.valid"
+                                    class="alert alert-danger">
+                                    El nombre es obligatorio</div>
+
+                                <label for="precio" class="col-3">Precio</label>
+                                <input type="number" name="precio" id="inputPrecioProductoEdit"
+                                    #precio="ngModel" [(ngModel)]="producto.precio" required
+                                    class="input col-8">
+
+                                <div *ngIf="precio.touched && !precio.valid"
+                                    class="alert alert-danger">
+                                    El precio es obligatorio</div>
+
+
+                                <label class="col-3" for="categoria">Categoría
+                                </label>
+
+                                <select class="col-8" id="categoria" name="categoria"
+                                    #categoria="ngModel" [(ngModel)]="producto.nombre_categoria"
+                                    id="inputCategoriaProductoEdit"
+                                    (change)="getIdCategoriaByNombreCategoria()">
+                                    <option
+                                        *ngFor="let c of listaCategorias; trackBy:listaCategorias.id_categoria"
+                                        value="{{c.nombre}}">{{c.nombre}}</option>
+                                </select>
+
+                                <div *ngIf="categoria.touched && producto.id_categoria==null"
+                                    class="alert alert-danger">
+                                    Debe elegir una categoría
+                                </div>
+
+                                <label class="col-12" for="barra">¿El producto es de barra o cocina?
+                                </label>
+
+                                <span class="offset-1 col-4 "> <input class="input" id="barra"
+                                        type="radio" name="barraCocina" id="inputBarraProductoEdit"
+                                        (click)="setBarraCocina(true, false)"><label
+                                        for="barra"><strong>Barra</strong></label></span>
+
+
+                                <input class="input" id="cocina" type="radio" name="barraCocina"
+                                    id="inputCocinaProductoEdit"
+                                    (click)="setBarraCocina(false, true)"><label
+                                    for="cocina"><strong>Cocina</strong></label>
+
+                                <div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="editProducto(editProductoForm)"
+                        [disabled]="producto.nombre==null || producto.id_categoria == null || producto.id_categoria==null || producto.barra == null ||producto.cocina == null"
+                        class="btn btn-secondary">Editar</button>
+                    <button type="button" class="btn btn-primary" (click)="editProductoForm.reset()"
+                        data-dismiss="modal">Cancelar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteProductoModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Papelera</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12"> <span class="c-no-select">¿Desea borrar el producto
+                            {{producto.nombre | titlecase}}?</span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="deleteProducto()">Borrar</button>
+                    <button type="button" class="btn btn-primary"
+                        data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="createCategoriaModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Crear Categoria</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="offset-1 col-10">
+                        <div class="row">
+                            <form #createCategoriaForm="ngForm">
+
+                                <label for="nombre" class="col-3">Nombre</label>
+                                <input type="text" name="nombre" id="inputNombreCategoria"
+                                    #nombrea="ngModel" [(ngModel)]="cat.nombre" required
+                                    maxlength="25" class="input col-8">
+
+                                <div *ngIf="nombre.touched && !nombre.valid"
+                                    class="alert alert-danger">
+                                    El nombre es obligatorio</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="addCategoria(createCategoriaForm)"
+                        [disabled]="createCategoriaForm.form.invalid"
+                        class="btn btn-secondary">Crear Categoría</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="createCategoriaForm.reset()" data-dismiss="modal">Cancelar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editCategoriaModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Crear Producto</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="offset-1 col-10">
+                        <div class="row">
+                            <form #editCategoriaForm="ngForm">
+
+                                <label for="nombre" class="col-3">Nombre</label>
+                                <input type="text" name="nombre" id="inputNombreCategoriaEdit"
+                                    #nombre="ngModel" [(ngModel)]="cat.nombre" required
+                                    maxlength="25" class="input col-8">
+
+                                <div *ngIf="nombre.touched && !nombre.valid"
+                                    class="alert alert-danger">
+                                    El nombre es obligatorio</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="editCategoria(editCategoriaForm)"
+                        [disabled]="cat.nombre==null" class="btn btn-secondary">Editar</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="editCategoriaForm.reset()" data-dismiss="modal">Cancelar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteCategoriaModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Papelera</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12"> <span class="c-no-select">¿Desea borrar la categoría
+                            {{cat.nombre | titlecase}}?</span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="deleteCategoria()">Borrar</button>
+                    <button type="button" class="btn btn-primary"
+                        data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
