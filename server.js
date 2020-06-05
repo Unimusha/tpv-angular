@@ -1,14 +1,11 @@
 const express = require('express');
-const path = require('path');
+
 const app = express();
 
-// Serve static files....
-app.use(express.static(__dirname + '/dist/tpv-angular'));
+app.use(express.static('./dist/tpv-angular'));
 
-// Send all requests to index.html
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/dist/tpv-angular/src/index.html'));
-});
+app.get('/*', (req, res) =>
+    res.sendFile('index.html', { root: 'dist/tpv-angular/' }),
+);
 
-// default Heroku PORT
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 8080);
