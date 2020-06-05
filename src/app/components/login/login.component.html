@@ -1,10 +1,10 @@
-<div class="container-fluid c-bg-tpv">
+<div class="container-fluid">
     <div *ngIf="panelNumeros; then thenBlock else elseBlock"></div>
 
     <ng-template #thenBlock>
 
-        <div class="row">
-            <div class="offset-1 col-10 offset-sm-4 col-sm-4">
+        <div class="row mt-5">
+            <div class="offset-1 col-10 offset-sm-4 col-sm-4 ">
                 <div class="row">
                     <div class="col-12 text-center">
                         <h3>{{usuario.nombre}} {{usuario.apellidos}}
@@ -59,7 +59,7 @@
 
     <ng-template #elseBlock>
 
-        <div class="w-50 m-auto">
+        <div class="w-50 mt-5 mx-auto">
             <button *ngFor="let usuario of listaUsuarios" class="btn btn-dark w-100 mt-3"
                 (click)="seleccionarUsuario(usuario.id_usuario, usuario.nombre, usuario.rango)">
                 {{usuario.nombre}} {{usuario.apellidos}}
@@ -73,12 +73,4 @@
         </div>
 
     </ng-template>
-
-
-
-
-    <div>
-        <button (click)="getUsuarios()" class="btn btn-danger">GET USUARIOS</button>
-        <button (click)="consoleLog()" class="btn btn-danger">CONSOLE LOG</button>
-    </div>
 </div>

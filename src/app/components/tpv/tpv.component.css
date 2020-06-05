@@ -1,0 +1,33 @@
+.c-tarjeta-categorias {
+    background-color: #333333;
+    color: white;
+}
+
+.c-tarjeta-productos {
+    background-color: #777777;
+    color: white;
+}
+
+tr:nth-child(even)>td {
+    background-color: white;
+}
+
+tr:nth-child(odd)>td {
+    background-color: rgb(245, 245, 245);
+}
+
+th {
+    color: #0052AA;
+    font-size: 1.3rem;
+}
+
+.c-color-azul {
+    background-color: #0052AA;
+    color: white;
+    border-radius: 10px;
+}
+
+.c-line-hei-5{
+    line-height: 5vh;
+}
+

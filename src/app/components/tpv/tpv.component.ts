@@ -65,7 +65,7 @@ export class TpvComponent implements OnInit {
   }
 
   pulsarNumero(num: string) {
-    if (this.numeros.length < 10) {
+    if (this.numeros.length < 100) {
       this.numeros = num;
     }
   }
@@ -205,4 +205,14 @@ export class TpvComponent implements OnInit {
   consolelog() {
     console.log(this.tabla)
   }
+
+
+  openAddComentarioModal() {
+    $("#comentarioModal").one('shown.bs.modal', function (e) {
+      $("#textArea").focus();
+    }).one('hidden.bs.modal', function (e) {
+    }).modal('show')
+  }
+
+
 }

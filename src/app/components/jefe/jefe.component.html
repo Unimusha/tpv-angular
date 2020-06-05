@@ -20,7 +20,7 @@
                             Empleados</div>
                     </li>
                 </ul>
-                <div class="alert alert-success alert-dismissible fade show text-center c-alert-posicion-centrada"
+                <div class="alert alert-primary alert-dismissible fade show text-center c-alert-posicion-centrada"
                     role="alert" id="alertJefe">
                     <h6>{{this.alertMsgInicio}}<strong> {{alertMsgNombre}} </strong>{{alertMsgFin}}
                     </h6>
@@ -34,24 +34,6 @@
                     <!-- VISTA PRODUCTOS -->
                     <div *ngSwitchCase="'Productos'">
 
-
-                        <div class="row my-3">
-                            <button class="btn btn-primary col-3"
-                                (click)="openCreateProductoModal()">Crear
-                                Producto</button>
-                            <select class="input col-3" name="select"
-                                [(ngModel)]="filterByDepartamentoProductoString">
-                                <option value="barraAndCocina">Barra y Cocina</option>
-                                <option value="barra">Barra</option>
-                                <option value="cocina">Cocina</option>
-                            </select>
-                            <input class="input col-3" type="text"
-                                [(ngModel)]="filterByNombreProductoString"
-                                placeholder="Filtrar por Nombre">
-                            <input class="input col-3" type="text"
-                                [(ngModel)]="filterByCategoriaProductoString"
-                                placeholder="Filtrar por Categoría">
-                        </div>
 
 
                         <table class="table c-table-fixed c-no-select c-bg-white">
@@ -96,29 +78,29 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-danger w-25" data-toggle="modal"
-                            data-target="#salirModal">Volver
-                            a Home</button>
-
-
+                        <div class="row my-2">
+                            <button class="btn btn-primary col-2 mx-2"
+                                (click)="openCreateProductoModal()">Crear
+                                Producto</button>
+                            <button class="btn btn-secondary col-2 mx-2" data-toggle="modal"
+                                data-target="#salirModal">Salir</button>
+                            <select class="input col-2 mx-2" name="select"
+                                [(ngModel)]="filterByDepartamentoProductoString">
+                                <option value="barraAndCocina">Barra y Cocina</option>
+                                <option value="barra">Barra</option>
+                                <option value="cocina">Cocina</option>
+                            </select>
+                            <input class="input col-2 mx-2" type="text"
+                                [(ngModel)]="filterByNombreProductoString"
+                                placeholder="Filtrar por Nombre">
+                            <input class="input col-2 mx-2" type="text"
+                                [(ngModel)]="filterByCategoriaProductoString"
+                                placeholder="Filtrar por Categoría">
+                        </div>
                     </div>
 
                     <!-- VISTA CATEGORÍAS -->
                     <div *ngSwitchCase="'Categorías'">
-
-
-                        <div class="row my-3">
-                            <button class="btn btn-primary col-3"
-                                (click)="openCreateCategoriaModal()">Crear
-                                Categoría</button>
-                            <input class="input col-3" type="text"
-                                [(ngModel)]="filterByNombreCategoriaString"
-                                placeholder="Filtrar por Nombre">
-                            <input class="input col-3" type="number"
-                                [(ngModel)]="filterByCantidadCategoriaNumber"
-                                placeholder="Filtrar por Cantidad de Productos">
-                        </div>
-
                         <table class="table c-table-fixed c-no-select c-bg-white">
                             <thead>
                                 <tr>
@@ -153,37 +135,25 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-danger" data-toggle="modal"
-                            data-target="#salirModal">Volver
-                            a Home</button>
 
+                        <div class="row my-2">
+                            <button class="btn btn-primary col-2 mx-2"
+                                (click)="openCreateCategoriaModal()">Crear
+                                Categoría</button>
+                            <button class="btn btn-secondary col-2 mx-2" data-toggle="modal"
+                                data-target="#salirModal">Salir</button>
+                            <input class="input col-2 mx-2" type="text"
+                                [(ngModel)]="filterByNombreCategoriaString"
+                                placeholder="Filtrar por Nombre">
+                            <input class="input col-2 mx-2" type="number"
+                                [(ngModel)]="filterByCantidadCategoriaNumber"
+                                placeholder="Filtrar por Cantidad de Productos">
+                        </div>
 
                     </div>
 
                     <!-- VISTA EMPLEADOS -->
                     <div *ngSwitchCase="'Empleados'">
-
-                        <div class="row my-3">
-                            <button class="btn btn-primary col-3"
-                                (click)="openCreateUsuarioModal()">Crear
-                                Empleado</button>
-                            <select class="input col-3" name="select"
-                                [(ngModel)]="filterByRangoEmpleadoString">
-                                <option value="todosEmpleados" selected>Todos los Empleados</option>
-                                <option value="jefe">Jefe</option>
-                                <option value="camarero">Camarero</option>
-                                <option value="barman">Barman</option>
-                                <option value="cocinero">Cocinero</option>
-                            </select>
-
-                            <input class="input col-3" type="text"
-                                [(ngModel)]="filterByNombreEmpleadoString"
-                                placeholder="Filtrar por Nombre">
-                            <input class="input col-3" type="text"
-                                [(ngModel)]="filterByApellidosEmpleadoString"
-                                placeholder="Filtrar por Apellidos">
-                        </div>
-
 
                         <table class="table c-table-fixed c-no-select c-bg-white">
                             <thead>
@@ -238,9 +208,28 @@
                             </tbody>
                         </table>
 
-                        <button class="btn btn-danger" data-toggle="modal"
-                            data-target="#salirModal">Volver
-                            a Home</button>
+                        <div class="row my-2">
+                            <button class="btn btn-primary col-2 mx-2"
+                                (click)="openCreateUsuarioModal()">Crear
+                                Empleado</button>
+                            <button class="btn btn-secondary col-2 mx-2" data-toggle="modal"
+                                data-target="#salirModal">Salir</button>
+                            <select class="input col-2 mx-2" name="select"
+                                [(ngModel)]="filterByRangoEmpleadoString">
+                                <option value="todosEmpleados" selected>Todos los Empleados</option>
+                                <option value="jefe">Jefe</option>
+                                <option value="camarero">Camarero</option>
+                                <option value="barman">Barman</option>
+                                <option value="cocinero">Cocinero</option>
+                            </select>
+
+                            <input class="input col-2 mx-2" type="text"
+                                [(ngModel)]="filterByNombreEmpleadoString"
+                                placeholder="Filtrar por Nombre">
+                            <input class="input col-2 mx-2" type="text"
+                                [(ngModel)]="filterByApellidosEmpleadoString"
+                                placeholder="Filtrar por Apellidos">
+                        </div>
 
                     </div>
 
@@ -276,9 +265,9 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
                         (click)="redirectToHome()">Aceptar</button>
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -355,8 +344,8 @@
                 <div class="modal-footer mt-2">
                     <button type="button" (click)="addProducto(createProductoForm)"
                         [disabled]="createProductoForm.form.invalid 
-                    || producto.id_categoria==null || producto.barra == null ||producto.cocina == null" class="btn btn-secondary">Crear</button>
-                    <button type="button" class="btn btn-primary"
+                    || producto.id_categoria==null || producto.barra == null ||producto.cocina == null" class="btn btn-primary">Crear</button>
+                    <button type="button" class="btn btn-secondary"
                         (click)="createProductoForm.reset()" data-dismiss="modal">Cancelar</button>
                 </div>
 
@@ -371,7 +360,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title c-no-select">Crear Producto</h4>
+                <h4 class="modal-title c-no-select">Editar Producto</h4>
             </div>
 
             <div class="modal-body">
@@ -437,9 +426,9 @@
                 <div class="modal-footer mt-2">
                     <button type="button" (click)="editProducto(editProductoForm)"
                         [disabled]="producto.nombre==null || producto.id_categoria == null || producto.id_categoria==null || producto.barra == null ||producto.cocina == null"
-                        class="btn btn-secondary">Editar</button>
-                    <button type="button" class="btn btn-primary" (click)="editProductoForm.reset()"
-                        data-dismiss="modal">Cancelar</button>
+                        class="btn btn-primary">Modificar</button>
+                    <button type="button" class="btn btn-secondary"
+                        (click)="editProductoForm.reset()" data-dismiss="modal">Cancelar</button>
                 </div>
 
             </div>
@@ -462,9 +451,9 @@
                             <strong>{{producto.nombre | titlecase}}</strong>?</span></div>
                 </div>
                 <div class="modal-footer mt-2">
-                    <button type="button" class="btn btn-secondary"
-                        (click)="deleteProducto()">Borrar</button>
                     <button type="button" class="btn btn-primary"
+                        (click)="deleteProducto()">Borrar</button>
+                    <button type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -478,7 +467,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title c-no-select">Crear Categoria</h4>
+                <h4 class="modal-title c-no-select">Crear Categoría</h4>
             </div>
 
             <div class="modal-body">
@@ -502,8 +491,8 @@
                 <div class="modal-footer mt-2">
                     <button type="button" (click)="addCategoria(createCategoriaForm)"
                         [disabled]="createCategoriaForm.form.invalid"
-                        class="btn btn-secondary">Crear Categoría</button>
-                    <button type="button" class="btn btn-primary"
+                        class="btn btn-primary">Craar</button>
+                    <button type="button" class="btn btn-secondary"
                         (click)="createCategoriaForm.reset()" data-dismiss="modal">Cancelar</button>
                 </div>
 
@@ -518,7 +507,7 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title c-no-select">Crear Producto</h4>
+                <h4 class="modal-title c-no-select">Editar Categoría</h4>
             </div>
 
             <div class="modal-body">
@@ -541,8 +530,8 @@
                 </div>
                 <div class="modal-footer mt-2">
                     <button type="button" (click)="editCategoria(editCategoriaForm)"
-                        [disabled]="cat.nombre==null" class="btn btn-secondary">Editar</button>
-                    <button type="button" class="btn btn-primary"
+                        [disabled]="cat.nombre==null" class="btn btn-primary">Modificar</button>
+                    <button type="button" class="btn btn-secondary"
                         (click)="editCategoriaForm.reset()" data-dismiss="modal">Cancelar</button>
                 </div>
 
@@ -566,9 +555,9 @@
                             <strong>{{cat.nombre | titlecase}}</strong>?</span></div>
                 </div>
                 <div class="modal-footer mt-2">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
                         (click)="deleteCategoria()">Borrar</button>
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -671,8 +660,8 @@
                     || usuario.nombre==null || usuario.apellidos ==null || usuario.rango == null 
                     || usuario.email == null || usuario.contrasenia == null || usuario.repiteContrasenia == null 
                     || usuario.contrasenia != usuario.repiteContrasenia "
-                        class="btn btn-secondary">Crear Empleado</button>
-                    <button type="button" class="btn btn-primary"
+                        class="btn btn-primary">Crear</button>
+                    <button type="button" class="btn btn-secondary"
                         (click)="createUsuarioForm.reset()" data-dismiss="modal">Cancelar</button>
                 </div>
 
@@ -785,9 +774,11 @@
                     <button *ngIf="usuario.cambiarContrasenia" class="btn btn-dark"
                         (click)="usuario.cambiarContrasenia=false">No Cambiar</button>
 
-                    <button type="button" (click)="editUsuario(editUsuarioForm)" [disabled]="isValidEditUsuario(editUsuarioForm)" class="btn btn-secondary">Editar Empleado</button>
-                    <button type="button" class="btn btn-primary" (click)="editUsuarioForm.reset()"
-                        data-dismiss="modal">Cancelar</button>
+                    <button type="button" (click)="editUsuario(editUsuarioForm)"
+                        [disabled]="isValidEditUsuario(editUsuarioForm)"
+                        class="btn btn-primary">Modificar</button>
+                    <button type="button" class="btn btn-secondary"
+                        (click)="editUsuarioForm.reset()" data-dismiss="modal">Cancelar</button>
                 </div>
 
             </div>
@@ -811,9 +802,9 @@
                                 {{usuario.apellidos | titlecase}}</strong>?</span></div>
                 </div>
                 <div class="modal-footer mt-2">
-                    <button type="button" class="btn btn-secondary" (click)="deleteUsuario()">Borrar
+                    <button type="button" class="btn btn-primary" (click)="deleteUsuario()">Borrar
                         Empleado</button>
-                    <button type="button" class="btn btn-primary"
+                    <button type="button" class="btn btn-secondary"
                         data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

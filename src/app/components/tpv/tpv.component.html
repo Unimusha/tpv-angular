@@ -1,4 +1,4 @@
-<div class="container-fluid mt-0 p-0 overflow-hidden c-bg-tpv">
+<div class="container-fluid">
     <div class="row ">
         <div class="col-12">
             <div class="row c-alto-60 ">
@@ -18,11 +18,15 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let t of tabla; index as index;" class="c-texto-tabla "
-                                (click)="selected = index"
-                                [ngClass]="{'c-selected-table': selected == index}">
-                                <td class="col-1">{{t.unidades}}ud.</td>
-                                <td class="col-3">{{t.nombre | titlecase}}</td>
-                                <td class="col-6">
+                                (click)="selected = index" (dblclick)="openAddComentarioModal()">
+                                <td class="col-1"
+                                    [ngClass]="{'c-selected-table': selected == index}">
+                                    {{t.unidades}}ud.</td>
+                                <td class="col-3"
+                                    [ngClass]="{'c-selected-table': selected == index}">
+                                    {{t.nombre | titlecase}}</td>
+                                <td class="col-6"
+                                    [ngClass]="{'c-selected-table': selected == index}">
 
                                     <span
                                         *ngIf="t.comentario; then thenBlock else elseBlock"></span>
@@ -31,8 +35,12 @@
                                     <ng-template #elseBlock>-</ng-template>
 
                                 </td>
-                                <td class="col-1">{{t.precio | number:'1.2-2'}}€</td>
-                                <td class="col-1">{{t.subtotal | number:'1.2-2'}}€</td>
+                                <td class="col-1"
+                                    [ngClass]="{'c-selected-table': selected == index}">
+                                    {{t.precio | number:'1.2-2'}}€</td>
+                                <td class="col-1"
+                                    [ngClass]="{'c-selected-table': selected == index}">
+                                    {{t.subtotal | number:'1.2-2'}}€</td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,71 +58,72 @@
                             class="offset-1 col-10 text-center c-letter-spacing-1 c-numeros border border-black my-3">
                             <h4 class="c-no-select">{{numeros}}</h4>
                         </div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('1')">1</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('2')">2</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('3')">3</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('4')">4</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('5')">5</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('6')">6</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('7')">7</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('8')">8</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('9')">9</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('0')">0</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="pulsarNumero('')">-</button></div>
-                        <div class="col-4"> <button class="btn btn-dark w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-dark w-100 my-1 "
                                 (click)="borrarNumero()">Borrar</button></div>
-                        <div class="col-6"> <button class="btn btn-primary w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-primary w-100 my-1 "
                                 (click)="addComanda()"
                                 [disabled]="tabla.length <= 0">Enviar</button>
                         </div>
-                        <div class="col-6"> <button class="btn btn-secondary w-100 my-2 "
+                        <div class="col-4"> <button class="btn btn-secondary w-100 my-1 "
                                 (click)="anularProductos()"
                                 [disabled]="tabla.length <= 0">Anular</button>
                         </div>
-                        <div class="col-12">
-                            <button class="btn btn-danger w-50"
+                        <div class="col-4">
+                            <button class="btn btn-danger w-100 my-1"
                                 (click)="redirectToCamarero()">Volver</button>
-                            <button class="btn btn-danger w-50" data-toggle="modal"
-                                data-target="#comentarioModal">Comentario</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row c-alto-5 c-no-select">
+            <div class="row c-alto-5 c-no-select ">
 
-                <div class="col-9">
-                    <ul class="c-bg-black list-group list-group-horizontal list-unstyled">
-                        <li class="list-item ml-1 mr-5">Mesa: {{mesa.numero_mesa}}</li>
-                        <li class="list-item">Empleado: {{usuario.nombre}}</li>
-                    </ul>
+                <div class="col-3 text-left c-no-select c-tarjeta-categorias" >
+                    <h5 class="c-line-hei-5" >Mesa: {{mesa.numero_mesa}}</h5>
                 </div>
-                <div class="col-3 text-center c-no-select">
-                    <h4>TOTAL: {{getTotal() | number:'1.2-2'}}€</h4>
+                <div class="col-6 text-right c-no-select c-tarjeta-categorias ">
+
+                    <h5 class="c-line-hei-5">{{usuario.nombre }}</h5>
+
+                </div>
+                <div class="col-3 text-center c-no-select c-tarjeta-categorias">
+                    <h4 class="c-line-hei-5">TOTAL: {{getTotal() | number:'1.2-2'}}€</h4>
                 </div>
             </div>
 
 
             <!--CATEGORIAS -->
-            <div class="row c-alto-35 pt-3">
+            <div class="row c-alto-35 pt-3 ">
                 <div class="col-4 pr-5">
                     <div class="row">
 
                         <div class="col-4 m-0 p-2 c-jover"
                             *ngFor="let c of categorias; index as index"
                             (click)="cambiarCategoriaActual(index)">
-                            <div class="card w-100 d-flex align-items-center">
+                            <div class="card w-100 d-flex align-items-center c-tarjeta-categorias"
+                                [ngClass]="{'c-selected-table': categoriaActual == index}">
                                 <div class="card-body">
                                     <p class="card-title c-no-select c-texto-cartas">
                                         {{c.nombre | titlecase}}</p>
@@ -129,7 +138,7 @@
 
                         <div class="col-2 m-0 p-2 c-jover"
                             *ngFor="let p of categorias[categoriaActual].productos; index as index;">
-                            <div class="card w-100 d-flex align-items-center"
+                            <div class="card w-100 d-flex align-items-center c-tarjeta-productos"
                                 (click)="addProductoTabla(p.id_producto, p.nombre, p.precio)">
                                 <div class="card-body">
                                     <p class="card-title c-no-select">{{p.nombre | titlecase}}</p>
@@ -159,7 +168,7 @@
                         <div class="row">
                             <div class="col-12"> <span class="c-no-select">Comentario</span></div>
                             <div class="col-12">
-                                <textarea rows="4" cols="50" autofocus
+                                <textarea rows="4" cols="50" autofocus id="textArea"
                                     [(ngModel)]="comentario"></textarea>
                             </div>
 
