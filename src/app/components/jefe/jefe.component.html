@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid modales">
     <div class="row">
         <div class="col-12 c-alto-20">
             <div class="row">
@@ -20,9 +20,13 @@
                             Empleados</div>
                     </li>
                 </ul>
+                <div class="alert alert-success alert-dismissible fade show text-center c-alert-posicion-centrada"
+                    role="alert" id="alertJefe">
+                    <h6>{{this.alertMsgInicio}}<strong> {{alertMsgNombre}} </strong>{{alertMsgFin}}
+                    </h6>
+
+                </div>
             </div>
-
-
         </div>
         <div [ngSwitch]="vistaJefe" class="col-12 c-alto-80">
             <div class="row">
@@ -33,7 +37,7 @@
 
                         <div class="row my-3">
                             <button class="btn btn-primary col-3"
-                                (click)="openCreateModalProducto()">Crear
+                                (click)="openCreateProductoModal()">Crear
                                 Producto</button>
                             <select class="input col-3" name="select"
                                 [(ngModel)]="filterByDepartamentoProductoString">
@@ -77,14 +81,14 @@
                                     <td class="col-1">
                                         <div class="c-cursor-pointer">
                                             <fa-icon [icon]="faEdit"
-                                                (click)="openEditModalProducto(
+                                                (click)="openEditProductoModal(
                                                      p.nombre, p.id_categoria, p.precio, p.barra, p.cocina, p.id_producto)">
                                             </fa-icon>
                                         </div>
                                     </td>
                                     <td class="col-1">
                                         <div class="c-cursor-pointer">
-                                            <fa-icon [icon]="faTrash" (click)="openDeleteModalProducto(
+                                            <fa-icon [icon]="faTrash" (click)="openDeleteProductoModal(
                                                  p.id_producto, p.nombre)">>
                                             </fa-icon>
                                         </div>
@@ -105,7 +109,7 @@
 
                         <div class="row my-3">
                             <button class="btn btn-primary col-3"
-                                (click)="openCreateModalCategoria()">Crear
+                                (click)="openCreateCategoriaModal()">Crear
                                 Categoría</button>
                             <input class="input col-3" type="text"
                                 [(ngModel)]="filterByNombreCategoriaString"
@@ -132,7 +136,7 @@
                                     <td class="col-1">
                                         <div class="c-cursor-pointer">
                                             <fa-icon [icon]="faEdit"
-                                                (click)="openEditModalCategoria(c.id_categoria,c.nombre)">
+                                                (click)="openEditCategoriaModal(c.id_categoria,c.nombre)">
                                             </fa-icon>
                                         </div>
                                     </td>
@@ -140,7 +144,7 @@
 
                                         <div class="c-cursor-pointer">
                                             <fa-icon [icon]="faTrash"
-                                                (click)="openDeleteModalCategoria(c.id_categoria,c.nombre)">
+                                                (click)="openDeleteCategoriaModal(c.id_categoria,c.nombre)">
                                             </fa-icon>
                                         </div>
 
@@ -161,7 +165,7 @@
 
                         <div class="row my-3">
                             <button class="btn btn-primary col-3"
-                                (click)="openCreateModalUsuario()">Crear
+                                (click)="openCreateUsuarioModal()">Crear
                                 Empleado</button>
                             <select class="input col-3" name="select"
                                 [(ngModel)]="filterByRangoEmpleadoString">
@@ -211,8 +215,25 @@
 
                                     <td class="col-5">{{u.contrasenia}}</td>
 
-                                    <td class="col-1">Edit</td>
-                                    <td class="col-1">Delete</td>
+                                    <td class="col-1">
+
+                                        <div class="c-cursor-pointer">
+                                            <fa-icon [icon]="faEdit"
+                                                (click)="openEditUsuarioModal(
+                                               u.id_usuario, u.nombre,u.apellidos, u.rango, u.email )">
+                                            </fa-icon>
+                                        </div>
+
+                                    </td>
+                                    <td class="col-1">
+
+                                        <div class="c-cursor-pointer">
+                                            <fa-icon [icon]="faTrash" (click)="openDeleteUsuarioModal(
+                                            u.id_usuario,u.nombre, u.apellidos)">
+                                            </fa-icon>
+                                        </div>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -331,7 +352,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="button" (click)="addProducto(createProductoForm)"
                         [disabled]="createProductoForm.form.invalid 
                     || producto.id_categoria==null || producto.barra == null ||producto.cocina == null" class="btn btn-secondary">Crear</button>
@@ -361,19 +382,17 @@
 
                                 <label for="nombre" class="col-3">Nombre</label>
                                 <input type="text" name="nombre" id="inputNombreProductoEdit"
-                                    #nombre="ngModel" [(ngModel)]="producto.nombre" required
-                                    maxlength="25" class="input col-8">
+                                    [(ngModel)]="producto.nombre" required maxlength="25"
+                                    class="input col-8">
 
-                                <div *ngIf="nombre.touched && !nombre.valid"
-                                    class="alert alert-danger">
-                                    El nombre es obligatorio</div>
+
 
                                 <label for="precio" class="col-3">Precio</label>
                                 <input type="number" name="precio" id="inputPrecioProductoEdit"
-                                    #precio="ngModel" [(ngModel)]="producto.precio" required
+                                    #precioEdit="ngModel" [(ngModel)]="producto.precio" required
                                     class="input col-8">
 
-                                <div *ngIf="precio.touched && !precio.valid"
+                                <div *ngIf="precioEdit.touched && !precioEdit.valid"
                                     class="alert alert-danger">
                                     El precio es obligatorio</div>
 
@@ -382,7 +401,7 @@
                                 </label>
 
                                 <select class="col-8" id="categoria" name="categoria"
-                                    #categoria="ngModel" [(ngModel)]="producto.nombre_categoria"
+                                    #categoriaEdit="ngModel" [(ngModel)]="producto.nombre_categoria"
                                     id="inputCategoriaProductoEdit"
                                     (change)="getIdCategoriaByNombreCategoria()">
                                     <option
@@ -390,7 +409,7 @@
                                         value="{{c.nombre}}">{{c.nombre}}</option>
                                 </select>
 
-                                <div *ngIf="categoria.touched && producto.id_categoria==null"
+                                <div *ngIf="categoriaEdit.touched && producto.id_categoria==null"
                                     class="alert alert-danger">
                                     Debe elegir una categoría
                                 </div>
@@ -415,7 +434,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="button" (click)="editProducto(editProductoForm)"
                         [disabled]="producto.nombre==null || producto.id_categoria == null || producto.id_categoria==null || producto.barra == null ||producto.cocina == null"
                         class="btn btn-secondary">Editar</button>
@@ -440,10 +459,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12"> <span class="c-no-select">¿Desea borrar el producto
-                            {{producto.nombre | titlecase}}?</span></div>
+                            <strong>{{producto.nombre | titlecase}}</strong>?</span></div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                <div class="modal-footer mt-2">
+                    <button type="button" class="btn btn-secondary"
                         (click)="deleteProducto()">Borrar</button>
                     <button type="button" class="btn btn-primary"
                         data-dismiss="modal">Cancelar</button>
@@ -465,8 +484,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="offset-1 col-10">
-                        <div class="row">
-                            <form #createCategoriaForm="ngForm">
+                        <form #createCategoriaForm="ngForm">
+                            <div class="row">
 
                                 <label for="nombre" class="col-3">Nombre</label>
                                 <input type="text" name="nombre" id="inputNombreCategoria"
@@ -476,11 +495,11 @@
                                 <div *ngIf="nombre.touched && !nombre.valid"
                                     class="alert alert-danger">
                                     El nombre es obligatorio</div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="button" (click)="addCategoria(createCategoriaForm)"
                         [disabled]="createCategoriaForm.form.invalid"
                         class="btn btn-secondary">Crear Categoría</button>
@@ -505,8 +524,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="offset-1 col-10">
-                        <div class="row">
-                            <form #editCategoriaForm="ngForm">
+                        <form #editCategoriaForm="ngForm">
+                            <div class="row">
 
                                 <label for="nombre" class="col-3">Nombre</label>
                                 <input type="text" name="nombre" id="inputNombreCategoriaEdit"
@@ -516,11 +535,11 @@
                                 <div *ngIf="nombre.touched && !nombre.valid"
                                     class="alert alert-danger">
                                     El nombre es obligatorio</div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="button" (click)="editCategoria(editCategoriaForm)"
                         [disabled]="cat.nombre==null" class="btn btn-secondary">Editar</button>
                     <button type="button" class="btn btn-primary"
@@ -544,9 +563,9 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12"> <span class="c-no-select">¿Desea borrar la categoría
-                            {{cat.nombre | titlecase}}?</span></div>
+                            <strong>{{cat.nombre | titlecase}}</strong>?</span></div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer mt-2">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                         (click)="deleteCategoria()">Borrar</button>
                     <button type="button" class="btn btn-primary"
@@ -558,3 +577,246 @@
 </div>
 
 
+<div id="createUsuarioModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Crear Empleado</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="offset-1 col-10">
+                        <div class="row">
+                            <form #createUsuarioForm="ngForm">
+
+                                <label for="nombre" class="col-3">Nombre</label>
+                                <input type="text" name="nombre" id="inputNombreUsuario"
+                                    #nombre="ngModel" [(ngModel)]="usuario.nombre" required
+                                    maxlength="25" class="input col-8">
+
+                                <label for="apellidos" class="col-3">Apellidos</label>
+                                <input type="text" name="apellidos" id="inputApellidosUsuario"
+                                    #apellidos="ngModel" [(ngModel)]="usuario.apellidos" required
+                                    maxlength="25" class="input col-8">
+
+                                <div *ngIf="apellidos.touched && !apellidos.valid"
+                                    class="alert alert-danger">
+                                    Los apellidos son obligatorios</div>
+
+
+                                <label class="col-5" for="rango">Departamento
+                                </label>
+                                <select class="col-6" id="inputRangoUsuario" name="rango"
+                                    #rango="ngModel" [(ngModel)]="usuario.rango">
+                                    <option value="0">Jefe</option>
+                                    <option value="1">Camarero</option>
+                                    <option value="2">Barman</option>
+                                    <option value="3">Cocinero</option>
+                                </select>
+                                <div *ngIf="rango.touched && usuario.rango==null"
+                                    class="alert alert-danger">
+                                    Debe elegir un departamento
+                                </div>
+
+                                <label for="email" class="col-3">Email</label>
+                                <input type="email" name="email" id="inputEmailUsuario"
+                                    #email="ngModel" [(ngModel)]="usuario.email" required
+                                    class="input col-8"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+
+                                <div *ngIf="email.touched && !email.valid"
+                                    class="alert alert-danger">
+                                    El email no es valido</div>
+
+
+                                <label class="col-5" for="rango">Contraseña</label>
+                                <input class="input col-4 w-100" type="password" name="contrasenia"
+                                    id="inputContraseniaUsuario" #contrasenia="ngModel"
+                                    [(ngModel)]="usuario.contrasenia" minlength="6" maxlength="6"
+                                    title="La contraseña debe de tener 6 números" pattern="[0-9]{6}"
+                                    class="c-input-passw">
+                                Ver
+                                <input class="input" type="checkbox"
+                                    (click)="togglePasswordVisibility('#inputContraseniaUsuario')">
+
+                                <div *ngIf="" class="alert alert-danger">
+                                    La debe de contener 6 números</div>
+                                <div></div>
+                                <label class="col-5" for="rango">Repite Contraseña</label>
+                                <input class="input col-4 w-100" type="password" name="contrasenia"
+                                    id="inputRepiteContraseniaUsuario" #repiteContrasenia="ngModel"
+                                    [(ngModel)]="usuario.repiteContrasenia" minlength="6"
+                                    maxlength="6" title="La contraseña debe de tener 6 números"
+                                    pattern="[0-9]{6}" class="c-input-passw">
+                                Ver
+                                <input class="input" type="checkbox"
+                                    (click)="togglePasswordVisibility('#inputRepiteContraseniaUsuario')">
+
+                                <div *ngIf="(repiteContrasenia.touched && !repiteContrasenia.valid) ||
+                                                                (contrasenia.touched && !contrasenia.valid)"
+                                    class="alert alert-danger">
+                                    La contraseña debe de contener 6 números</div>
+                                <div *ngIf="(this.usuario.contrasenia != this.usuario.repiteContrasenia && repiteContrasenia.touched && contrasenia.touched)"
+                                    class="alert alert-danger">Las contraseñas deben de ser iguales
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mt-2">
+                    <button type="button" (click)="addUsuario(createUsuarioForm)" [disabled]="createUsuarioForm.form.invalid 
+                    || usuario.nombre==null || usuario.apellidos ==null || usuario.rango == null 
+                    || usuario.email == null || usuario.contrasenia == null || usuario.repiteContrasenia == null 
+                    || usuario.contrasenia != usuario.repiteContrasenia "
+                        class="btn btn-secondary">Crear Empleado</button>
+                    <button type="button" class="btn btn-primary"
+                        (click)="createUsuarioForm.reset()" data-dismiss="modal">Cancelar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editUsuarioModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Editar Empleado</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="offset-1 col-10">
+                        <div class="row">
+                            <form #editUsuarioForm="ngForm">
+                                <label for="nombre" class="col-3">Nombre</label>
+                                <input type="text" name="nombre" id="inputNombreUsuarioEdit"
+                                    [(ngModel)]="usuario.nombre" required maxlength="25"
+                                    class="input col-8">
+
+
+                                <label for="apellidos" class="col-3">Apellidos</label>
+                                <input type="text" name="apellidos" id="inputApellidosUsuarioEdit"
+                                    #apellidosEdit="ngModel" [(ngModel)]="usuario.apellidos"
+                                    required maxlength="25" class="input col-8">
+
+                                <div *ngIf="apellidosEdit.touched && !apellidosEdit.valid"
+                                    class="alert alert-danger">
+                                    Los apellidos son obligatorios</div>
+
+
+                                <label class="col-5" for="rango">Departamento
+                                </label>
+                                <select class="col-6" id="inputRangoUsuarioEdit" name="rango"
+                                    #rangoEdit="ngModel" [(ngModel)]="usuario.rango">
+                                    <option value="0">Jefe</option>
+                                    <option value="1">Camarero</option>
+                                    <option value="2">Barman</option>
+                                    <option value="3">Cocinero</option>
+                                </select>
+                                <div *ngIf="rangoEdit.touched && usuario.rango==null"
+                                    class="alert alert-danger">
+                                    Debe elegir un departamento
+                                </div>
+
+                                <label for="email" class="col-3">Email</label>
+                                <input type="email" name="email" id="inputEmailUsuarioEdit"
+                                    #emailEdit="ngModel" [(ngModel)]="usuario.email" required
+                                    class="input col-8"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+
+                                <div *ngIf="emailEdit.touched && !emailEdit.valid"
+                                    class="alert alert-danger">
+                                    El email no es valido</div>
+
+
+
+                                <div *ngIf="usuario.cambiarContrasenia">
+
+                                    <label class="col-5" for="rango">Contraseña</label>
+                                    <input class="input col-4 w-100" type="password"
+                                        name="contrasenia" id="inputContraseniaUsuarioEdit"
+                                        #contraseniaEdit="ngModel" [(ngModel)]="usuario.contrasenia"
+                                        minlength="6" maxlength="6"
+                                        title="La contraseña debe de tener 6 números"
+                                        pattern="[0-9]{6}" class="c-input-passw">
+                                    Ver
+                                    <input class="input" type="checkbox"
+                                        (click)="togglePasswordVisibility('#inputContraseniaUsuarioEdit')">
+
+                                    <div *ngIf="" class="alert alert-danger">
+                                        La debe de contener 6 números</div>
+                                    <div></div>
+                                    <label class="col-5" for="rango">Repite Contraseña</label>
+                                    <input class="input col-4 w-100" type="password"
+                                        name="contrasenia" id="inputRepiteContraseniaUsuarioEdit"
+                                        #repiteContraseniaEdit="ngModel"
+                                        [(ngModel)]="usuario.repiteContrasenia" minlength="6"
+                                        maxlength="6" title="La contraseña debe de tener 6 números"
+                                        pattern="[0-9]{6}" class="c-input-passw">
+                                    Ver
+                                    <input class="input" type="checkbox"
+                                        (click)="togglePasswordVisibility('#inputRepiteContraseniaUsuarioEdit')">
+
+                                    <div *ngIf="(repiteContraseniaEdit.touched && !repiteContraseniaEdit.valid) ||
+                                (contraseniaEdit.touched && !contraseniaEdit.valid)"
+                                        class="alert alert-danger">
+                                        La contraseña debe de contener 6 números</div>
+                                    <div *ngIf="(this.usuario.contrasenia != this.usuario.repiteContrasenia && repiteContraseniaEdit.touched && contraseniaEdit.touched)"
+                                        class="alert alert-danger">Las contraseñas deben de ser
+                                        iguales
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mt-2">
+                    <button *ngIf="!usuario.cambiarContrasenia" class="btn btn-dark"
+                        (click)="usuario.cambiarContrasenia=true">Cambiar
+                        Contraseña</button>
+                    <button *ngIf="usuario.cambiarContrasenia" class="btn btn-dark"
+                        (click)="usuario.cambiarContrasenia=false">No Cambiar</button>
+
+                    <button type="button" (click)="editUsuario(editUsuarioForm)" [disabled]="isValidEditUsuario(editUsuarioForm)" class="btn btn-secondary">Editar Empleado</button>
+                    <button type="button" class="btn btn-primary" (click)="editUsuarioForm.reset()"
+                        data-dismiss="modal">Cancelar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteUsuarioModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title c-no-select">Papelera</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12"> <span class="c-no-select">¿Desea borrar el empleado
+                            <strong>{{usuario.nombre | titlecase}}
+                                {{usuario.apellidos | titlecase}}</strong>?</span></div>
+                </div>
+                <div class="modal-footer mt-2">
+                    <button type="button" class="btn btn-secondary" (click)="deleteUsuario()">Borrar
+                        Empleado</button>
+                    <button type="button" class="btn btn-primary"
+                        data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

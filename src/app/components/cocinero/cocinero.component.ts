@@ -38,7 +38,7 @@ export class CocineroComponent implements OnInit {
     this.comandaActual = [];
     this.selected = 0;
 
-   
+
     this.listaFiltradaCocina = 0;
     this.listaFiltradaCocinaPanel = 0;
 
@@ -72,7 +72,7 @@ export class CocineroComponent implements OnInit {
         console.log(<any>error)
       },
       () => {
-        
+
         this.getComandasCocina()
       }
     );
@@ -100,8 +100,22 @@ export class CocineroComponent implements OnInit {
         }
       }
     }
+    this.listaComandas.sort(this.compare)
+    console.log(this.listaComandas)
     this.filterComandasCocina()
 
+  }
+  compare(a, b) {
+    const bandA = a.id_comanda;
+    const bandB = b.id_comanda;
+
+    let comparison = 0;
+    if (bandA > bandB) {
+      comparison = 1;
+    } else if (bandA < bandB) {
+      comparison = -1;
+    }
+    return comparison;
   }
 
   filtrarComandaCocinaPanel() {
@@ -133,7 +147,7 @@ export class CocineroComponent implements OnInit {
   }
 
 
-  modalCompletarComandaCocina(){
+  modalCompletarComandaCocina() {
 
   }
   completarComandaCocina(id_comanda) {

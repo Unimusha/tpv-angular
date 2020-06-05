@@ -27,7 +27,7 @@ li div {
 }
 
 .c-selected-list-item {
-    background: #a03232 !important; 
+    background: #a03232 !important;
     font-size: 2rem;
 }
 
@@ -62,3 +62,15 @@ li div {
     float: left;
     background-color: white;
 }
+
+.c-alert-posicion-centrada {
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 5rem;
+    width: 50%;
+    z-index: 1;
+}
+

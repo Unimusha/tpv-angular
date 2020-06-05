@@ -37,11 +37,17 @@ export class JefeComponent implements OnInit {
   listaProductos: any;
   listaCategorias: any;
 
-  usuario: Usuario;
+
   producto: any;
   produtctoToEdit: any;
   cat: any;
   categoriaToEdit: any;
+  usuario: any;
+  usuarioToEdit: any;
+
+  alertMsgInicio: string;
+  alertMsgNombre: string;
+  alertMsgFin: string;
 
   constructor(
     private _peticionesService: PeticionesService,
@@ -55,11 +61,14 @@ export class JefeComponent implements OnInit {
     this.listaUsuarios = [];
     this.listaProductos = [];
     this.listaCategorias = [];
-    this.usuario = new Usuario(null, null, null, null)
+
     this.producto = {};
     this.produtctoToEdit = {}
     this.cat = {};
     this.categoriaToEdit = {}
+    this.usuario = {}
+    this.usuarioToEdit = {}
+
     this.esBarraCocina = {
       barra: false,
       cocina: false
@@ -74,21 +83,43 @@ export class JefeComponent implements OnInit {
     this.filterByRangoEmpleadoString = "todosEmpleados";
     this.filterByNombreEmpleadoString = "";
     this.filterByApellidosEmpleadoString = "";
+
+    this.alertMsgInicio = "";
+    this.alertMsgNombre = "";
+    this.alertMsgFin = "";
   }
 
 
 
   ngOnInit(): void {
     this.id_usuario = this._route.snapshot.params.id;
-    this.getUsuario();
     this.getUsuarios();
     this.getProductos();
     this.getCategorias();
+    $("#alertJefe").hide()
+    $(".c-input-passw")
+      .bind("keypress", function (evt) {
+        if (evt.which < 48 || evt.which > 57) {
+          evt.preventDefault();
+        }
+      })
   }
+
 
   cambiarSeleccion(pos, cad) {
     this.selected = pos;
     this.vistaJefe = cad;
+  }
+
+  togglePasswordVisibility(input) {
+
+    var type = $(input).attr("type");
+
+    if (type === 'password') {
+      $(input).attr("type", "text");
+    } else {
+      $(input).attr("type", "password");
+    }
   }
   redirectToHome() {
     this._router.navigate(["/"])
@@ -126,10 +157,18 @@ export class JefeComponent implements OnInit {
       () => {
         this.producto.barra = null;
         this.producto.cocina = null;
-        form.reset();
         this.getProductos();
         this.getCategorias();
+        this.alertMsgInicio = "El producto"
+        this.alertMsgNombre = this.producto.nombre
+        this.alertMsgFin = "se ha creado correctamente."
+        form.reset();
         $('#createProductoModal').modal('hide');
+        $('#createProductoModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
+
       }
     );
   }
@@ -147,10 +186,17 @@ export class JefeComponent implements OnInit {
         console.log(<any>error)
       },
       () => {
-        form.reset();
         this.getProductos();
         this.getCategorias();
+        this.alertMsgInicio = "El producto"
+        this.alertMsgNombre = this.producto.nombre
+        this.alertMsgFin = "se ha editado correctamente."
+        form.reset();
         $('#editProductoModal').modal('hide');
+        $('#editProductoModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
       }
     );
   }
@@ -163,9 +209,15 @@ export class JefeComponent implements OnInit {
         console.log(<any>error)
         this.getProductos();
         this.getCategorias();
-      },
-      () => {
+        this.alertMsgInicio = "El producto"
+        this.alertMsgNombre = this.producto.nombre
+        this.alertMsgFin = "se ha borrado correctamente."
+        this.producto.nombre = "";
         $('#deleteProductoModal').modal('hide');
+        $('#deleteProductoModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
       }
     );
   }
@@ -222,10 +274,18 @@ export class JefeComponent implements OnInit {
         console.log(<any>error)
       },
       () => {
-        form.reset();
+
         this.getProductos();
         this.getCategorias();
+        this.alertMsgInicio = "La categoría"
+        this.alertMsgNombre = this.cat.nombre
+        this.alertMsgFin = "se ha creado correctamente."
+        form.reset();
         $('#createCategoriaModal').modal('hide');
+        $('#createCategoriaModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
       }
     );
   }
@@ -242,10 +302,18 @@ export class JefeComponent implements OnInit {
         console.log(<any>error)
       },
       () => {
-        form.reset();
         this.getProductos();
         this.getCategorias();
+        this.alertMsgInicio = "La categoría"
+        this.alertMsgNombre = this.cat.nombre
+        this.alertMsgFin = "se ha editado correctamente."
+        form.reset();
         $('#editCategoriaModal').modal('hide');
+        $('#editCategoriaModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
+
       }
     );
   }
@@ -258,9 +326,15 @@ export class JefeComponent implements OnInit {
         console.log(<any>error)
         this.getProductos();
         this.getCategorias();
-      },
-      () => {
+        this.alertMsgInicio = "El producto"
+        this.alertMsgNombre = this.cat.nombre
+        this.alertMsgFin = "se ha borrado correctamente."
+        this.cat.nombre = "";
         $('#deleteCategoriaModal').modal('hide');
+        $('#deleteCategoriaModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
       }
     );
   }
@@ -295,10 +369,15 @@ export class JefeComponent implements OnInit {
     );
   }
   addUsuario(form) {
-    this.producto.id_producto = null;
-    this.producto.id_categoria = +this.producto.id_categoria
-    console.log(this.producto)
-    this._peticionesService.addProducto(this.producto).subscribe(
+    this.usuario.nombre = this.usuario.nombre.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+      return letter.toUpperCase();
+    });
+    this.usuario.apellidos = this.usuario.apellidos.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+      return letter.toUpperCase();
+    });
+
+    console.log(this.usuario)
+    this._peticionesService.addUsuario(this.usuario).subscribe(
       result => {
         console.log(result)
       },
@@ -306,22 +385,35 @@ export class JefeComponent implements OnInit {
         console.log(<any>error)
       },
       () => {
-        this.producto.barra = null;
-        this.producto.cocina = null;
+        this.getUsuarios()
+        this.alertMsgInicio = "El empleado"
+        this.alertMsgNombre = this.usuario.nombre + " " + this.usuario.apellidos
+        this.alertMsgFin = "se ha creado correctamente."
         form.reset();
-        this.getProductos();
-        this.getCategorias();
-        $('#createProductoModal').modal('hide');
+        $('#createUsuarioModal').modal('hide');
+        $('#createUsuarioModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
       }
     );
   }
   editUsuario(form) {
-    this.produtctoToEdit.nombre = this.producto.nombre;
-    this.produtctoToEdit.id_categoria = this.producto.id_categoria;
-    this.produtctoToEdit.precio = this.producto.precio;
-    this.produtctoToEdit.barra = this.producto.barra;
-    this.produtctoToEdit.cocina = this.producto.cocina;
-    this._peticionesService.editProducto(this.producto.id_producto, this.produtctoToEdit).subscribe(
+    this.usuario.nombre = this.usuario.nombre.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+      return letter.toUpperCase();
+    });
+    this.usuario.apellidos = this.usuario.apellidos.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+      return letter.toUpperCase();
+    });
+
+    this.usuarioToEdit.nombre = this.usuario.nombre;
+    this.usuarioToEdit.apellidos = this.usuario.apellidos;
+    this.usuarioToEdit.rango = this.usuario.rango;
+    this.usuarioToEdit.email = this.usuario.email;
+    if (this.usuario.cambiarContrasenia) {
+      this.usuarioToEdit.contrasenia = this.usuario.contrasenia;
+    }
+    this._peticionesService.editUsuario(this.usuario.id_usuario, this.usuarioToEdit).subscribe(
       result => {
         console.log(result)
       },
@@ -329,39 +421,50 @@ export class JefeComponent implements OnInit {
         console.log(<any>error)
       },
       () => {
+        this.getUsuarios()
+        this.alertMsgInicio = "El empleado"
+        this.alertMsgNombre = this.usuario.nombre + " " + this.usuario.apellidos
+        this.alertMsgFin = "se ha editado correctamente."
         form.reset();
-        this.getProductos();
-        this.getCategorias();
-        $('#editProductoModal').modal('hide');
+        $('#editUsuarioModal').modal('hide');
+        $('#editUsuarioModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
       }
     );
   }
   deleteUsuario() {
-    this._peticionesService.deleteProducto(this.producto.id_producto).subscribe(
+    this._peticionesService.deleteUsuario(this.usuario.id_usuario).subscribe(
       result => {
         console.log(result)
       },
       error => {
         console.log(<any>error)
-        this.getProductos();
-        this.getCategorias();
-      },
-      () => {
-        $('#deleteProductoModal').modal('hide');
+        this.getUsuarios()
+        this.alertMsgInicio = "El empleado"
+        this.alertMsgNombre = this.usuario.nombre + " " + this.usuario.apellidos
+        this.alertMsgFin = "se ha borrado correctamente."
+        this.cat.nombre = "";
+        $('#deleteUsuarioModal').modal('hide');
+        $('#deleteUsuarioModal').on('hidden.bs.modal', function () {
+          $("#alertJefe").show()
+          setTimeout(function () { $("#alertJefe").fadeOut() }, 3500);
+        });
       }
     );
   }
 
   //MODALS
 
-  openCreateModalProducto() {
+  openCreateProductoModal() {
     $("#createProductoModal").one('shown.bs.modal', function (e) {
       $("#inputNombreProducto").focus();
     }).one('hidden.bs.modal', function (e) {
     }).modal('show')
   }
 
-  openEditModalProducto(nombre, categoria, precio, barra, cocina, id_producto) {
+  openEditProductoModal(nombre, categoria, precio, barra, cocina, id_producto) {
     this.producto.id_producto = id_producto;
     this.producto.nombre = nombre;
     this.producto.nombre_categoria = categoria;
@@ -386,7 +489,7 @@ export class JefeComponent implements OnInit {
     this.getIdCategoriaByNombreCategoria()
   }
 
-  openDeleteModalProducto(id_producto, nombre) {
+  openDeleteProductoModal(id_producto, nombre) {
     this.producto.id_producto = id_producto;
     this.producto.nombre = nombre;
     $("#deleteProductoModal").one('shown.bs.modal', function (e) {
@@ -395,14 +498,14 @@ export class JefeComponent implements OnInit {
   }
 
 
-  openCreateModalCategoria() {
+  openCreateCategoriaModal() {
     $("#createCategoriaModal").one('shown.bs.modal', function (e) {
       $("#inputNombreCategoria").focus();
     }).one('hidden.bs.modal', function (e) {
     }).modal('show');
   }
 
-  openEditModalCategoria(id_categoria, nombre) {
+  openEditCategoriaModal(id_categoria, nombre) {
     this.cat.id_categoria = id_categoria;
     this.cat.nombre = nombre;
     console.log(this.cat)
@@ -412,7 +515,7 @@ export class JefeComponent implements OnInit {
     }).modal('show');
   }
 
-  openDeleteModalCategoria(id_categoria, nombre) {
+  openDeleteCategoriaModal(id_categoria, nombre) {
     this.cat.id_categoria = id_categoria;
     this.cat.nombre = nombre;
     $("#deleteCategoriaModal").one('shown.bs.modal', function (e) {
@@ -420,41 +523,36 @@ export class JefeComponent implements OnInit {
     }).modal('show');
   }
 
-  openCreateModalUsuario() {
+  openCreateUsuarioModal() {
     $("#createUsuarioModal").one('shown.bs.modal', function (e) {
-      $("#inputNombreProducto").focus();
+      $("#inputNombreUsuario").focus();
     }).one('hidden.bs.modal', function (e) {
     }).modal('show')
   }
 
-  openEditModalUsuario(nombre, categoria, precio, barra, cocina, id_usuario) {
-    //this.producto.id_producto = id_producto;
-    this.producto.nombre = nombre;
-    this.producto.nombre_categoria = categoria;
-    this.producto.precio = precio;
-    this.producto.barra = barra;
-    this.producto.cocina = cocina;
-    $("#editUsuarioModal").one('shown.bs.modal', function (e) {
+  openEditUsuarioModal(id_usuario, nombre, apellidos, rango, email, ) {
+    this.usuario.nombre = nombre;
+    this.usuario.apellidos = apellidos;
+    this.usuario.rango = rango;
+    this.usuario.email = email;
+    this.usuario.id_usuario = id_usuario
 
-      $('#inputNombreProductoEdit').val(nombre.trim()).addClass("c-capitalize").focus()
-      $('#inputPrecioProductoEdit').val(+precio)
-      $('#inputCategoriaProductoEdit').val(categoria);
-      if (barra) {
-        $('#inputBarraProductoEdit').prop('checked', true);
-      } else if (cocina) {
-        $('#inputCocinaProductoEdit').prop('checked', true);
-      } else {
-        $('#inputBarraProductoEdit').prop('checked', false);
-        $('#inputCocinaProductoEdit').prop('checked', false);
-      }
+    $("#editUsuarioModal").one('shown.bs.modal', function (e) {
+      $('#inputNombreUsuarioEdit').val(nombre.trim()).addClass("c-capitalize").focus()
+      $('#inputApellidosUsuarioEdit').val(apellidos.trim()).addClass("c-capitalize")
+      $('#inputRangoUsuarioEdit').val(rango);
+      $('#inputEmailUsuarioEdit').val(email.trim())
+      $("#inputContraseniaUsuarioEdit").val("");
+      $("#inputRepiteContraseniaUsuarioEdit").val("");
     }).one('hidden.bs.modal', function (e) {
     }).modal('show');
-    this.getIdCategoriaByNombreCategoria()
+
   }
 
-  openDeleteModalUsuario(id_usuario, nombre) {
-    // this.producto.id_producto = id_producto;
-    this.producto.nombre = nombre;
+  openDeleteUsuarioModal(id_usuario, nombre, apellidos) {
+    this.usuario.id_usuario = id_usuario;
+    this.usuario.nombre = nombre;
+    this.usuario.apellidos = apellidos;
     $("#deleteUsuarioModal").one('shown.bs.modal', function (e) {
     }).one('hidden.bs.modal', function (e) {
     }).modal('show');
@@ -507,8 +605,8 @@ export class JefeComponent implements OnInit {
     return self.listaUsuarios.filter(function (e) {
       if (e.nombre.toLowerCase().includes(self.filterByNombreEmpleadoString.toLowerCase())
         && e.apellidos.toLowerCase().includes(self.filterByApellidosEmpleadoString.toLowerCase())) {
-        
-          switch (self.filterByRangoEmpleadoString) {
+
+        switch (self.filterByRangoEmpleadoString) {
           case "todosEmpleados":
             return e
           case "jefe":
@@ -537,6 +635,37 @@ export class JefeComponent implements OnInit {
         }
       }
     })
+  }
+
+  //VALIDATORS
+
+  isValidEditUsuario(form) {
+
+    if (this.usuario.cambiarContrasenia) {
+      if (form.invalid || this.usuario.nombre == null || this.usuario.apellidos == null
+        || this.usuario.rango == null || this.usuario.email == null || this.usuario.contrasenia == null
+        || this.usuario.repiteContrasenia == null || this.usuario.contrasenia != this.usuario.repiteContrasenia
+      ) { return true }
+    } else {
+      if (form.invalid || this.usuario.nombre == null || this.usuario.apellidos == null
+        || this.usuario.rango == null || this.usuario.email == null
+      ) { return true }
+      return false
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
 }

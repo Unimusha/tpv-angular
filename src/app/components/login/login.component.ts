@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   public panelNumeros: boolean;
   public password: string;
   public passwordAsterisco: string;
-  public usuario: Usuario;
+  public usuario: any;
 
 
 
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.panelNumeros = false;
     this.password = "";
     this.passwordAsterisco = "";
-    this.usuario = new Usuario(null, null, null, null);
+    this.usuario = {};
   }
 
   ngOnInit(): void {

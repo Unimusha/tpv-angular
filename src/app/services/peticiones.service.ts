@@ -13,7 +13,7 @@ export class PeticionesService {
     constructor(
         public _http: HttpClient
     ) {
-        this.url = "http://localhost:8080/"
+        this.url = "https://tpv-api.herokuapp.com/"
     }
 
     ngOnInit(): void {
@@ -21,7 +21,7 @@ export class PeticionesService {
 
     getUsuarios(): Observable<any> {
         let headers = new HttpHeaders().set("Content-Type", "application/json");
-        return this._http.get(this.url + 'api/usuarios', {headers: headers})
+        return this._http.get(this.url + 'api/usuarios', { headers: headers })
     }
     getUsuario(idUsuario): Observable<any> {
         return this._http.get(this.url + 'api/usuarios/' + idUsuario)
@@ -54,16 +54,16 @@ export class PeticionesService {
         return this._http.post(this.url + "api/mesas", json, { headers: headers })
     }
 
-    editMesa(id, mesa){
-         let json = JSON.stringify(mesa);
+    editMesa(id, mesa) {
+        let json = JSON.stringify(mesa);
         let headers = new HttpHeaders().set("Content-Type", "application/json");
 
-        return this._http.patch(this.url + "api/mesas/"+id, json,  { headers: headers })
+        return this._http.patch(this.url + "api/mesas/" + id, json, { headers: headers })
     }
 
-    deleteMesa(id): Observable<any>{
+    deleteMesa(id): Observable<any> {
         let headers = new HttpHeaders().set("Content-Type", "application/json");
-        return this._http.delete(this.url + "api/mesas/"+id,  { headers: headers })
+        return this._http.delete(this.url + "api/mesas/" + id, { headers: headers })
     }
     addComanda(comanda) {
         let json = JSON.stringify(comanda);
@@ -125,7 +125,7 @@ export class PeticionesService {
     }
 
 
-    addComandaProductoList(listaComandaProductos){
+    addComandaProductoList(listaComandaProductos) {
         let json = JSON.stringify(listaComandaProductos);
         let headers = new HttpHeaders().set("Content-Type", "application/json");
 
@@ -139,7 +139,7 @@ export class PeticionesService {
     }
 
     completarComandaCocina(id_comanda) {
-    
+
         let headers = new HttpHeaders().set("Content-Type", "application/json");
 
         return this._http.patch(this.url + "api/comandas/completadoCocina/" + id_comanda, { headers: headers })
