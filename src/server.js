@@ -7,7 +7,7 @@ app.use(express.static(__dirname + '/dist/tpv-angular'));
 
 // Send all requests to index.html
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/dist/tpv-angular/index.html'));
+    res.sendFile(path.join(__dirname + '/dist/tpv-angular/src/index.html'));
 });
 
 // default Heroku PORT
