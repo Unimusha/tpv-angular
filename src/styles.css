@@ -38,12 +38,16 @@ body {
 }
 
 .c-scale-hover:hover {
-    transform: scale(1.4);
+    transform: scale(1.2);
+    cursor: pointer;
 }
 
 .c-carta-div {
     position: relative;
     height: 20vh;
+    border-radius: 20px;
+    background-color: #777777;
+    border: 3px solid #333333;
 }
 
 .c-carta-body {
@@ -52,56 +56,90 @@ body {
 }
 
 .c-carta-personas {
+    color: white;
     position: absolute;
     left: 0.3vw;
     top: 0.3vh;
 }
 
 .c-carta-icons {
+    color: white;
     position: absolute;
     right: 1vw;
     top: 1vh;
+    cursor: pointer;
 }
 
 .c-carta-mesa {
+    color: white;
     position: absolute;
     left: 40%;
     top: 20%;
 }
 
 .c-carta-basura {
+    color: white;
     position: absolute;
     right: 1vw;
     bottom: 1vh;
+    cursor: pointer;
 }
 
 .c-carta-edit {
+    color: white;
     position: absolute;
     left: 1vw;
     bottom: 1vh;
+    cursor: pointer;
 }
 
 .c-carta-barra {
-    box-sizing: content-box;
+    box-sizing: border-box;
     position: absolute;
     width: 50%;
     height: 5vh;
     bottom: 0px;
-    background-color: grey;
+    background-color: #333333;
+    line-height: 5vh;
 }
 
 .c-carta-cocina {
-    box-sizing: content-box;
+    box-sizing: border-box;
     position: absolute;
     width: 50%;
     height: 5vh;
     bottom: 0px;
     right: 0px;
-    background-color: grey;
+    background-color: #333333;
+    border-top: 3px solid #333333;
+    line-height: 5vh;
 }
 
 .c-carta-add {
     text-align: center;
+    color: white;
+    line-height: 15vh;
+}
+
+.c-color {
+    color: #333333;
+}
+
+.c-titulo-izq {
+    height: 10vh;
+    color: white;
+    background-color: #333333;
+    border-radius: 0px 0px 0px 10px;
+    line-height: 10vh;
+    padding-left: 12rem;
+}
+
+.c-titulo-der {
+    height: 10vh;
+    color: white;
+    background-color: #333333;
+    border-radius: 0px 0px 10px 0px;
+    line-height: 10vh;
 }
 
 .c-no-select {
@@ -126,11 +164,15 @@ body {
 }
 
 .c-azul {
-    background-color: blue !important;
+    background-color: #003671 !important;
+    border-top: 3px solid #333333;
+    line-height: 5vh;
 }
 
 .c-verde {
-    background-color: green !important;
+    background-color: #023A02 !important;
+    border-top: 3px solid #333333;
+    line-height: 5vh;
 }
 
 .c-alto-100 {
@@ -155,6 +197,10 @@ body {
 
 .c-alto-55 {
     height: 55vh;
+}
+
+.c-alto-50 {
+    height: 50vh;
 }
 
 .c-alto-20 {

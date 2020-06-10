@@ -1,10 +1,16 @@
-<h3 class="text-center">Vista de Camarero con id: {{id_usuario}}</h3>
-
 <div class="container-fluid">
     <div class="row">
 
-        <div class="col-6 col-sm-3 col-lg-2 my-2 " *ngFor="let m of usuario.mesas;let i=index">
-            <div class="card c-carta-div overflow-hidden" style="border-radius: 20px;">
+
+        <h3 class="col-10 text-center c-titulo-izq c-no-select">Camarero {{usuario.nombre }}
+            {{usuario.apellidos}}</h3>
+        <div class="col-2 c-titulo-der"> <button class="btn btn-secondary w-100" data-toggle="modal"
+                data-target="#salirModal">Salir</button></div>
+
+
+        <div class="col-6 col-sm-3 col-lg-2 my-2 "
+            *ngFor="let m of listaMesas; trackBy:listaMesas.id_mesa; let i=index">
+            <div class="card c-carta-div overflow-hidden">
                 <div class="card-body c-carta-body m-0 p-0">
 
                     <div class="c-carta-personas c-no-select">{{m.numero_personas}} <fa-icon
@@ -17,11 +23,11 @@
                     <ng-template #thenBlock>
                         <div class="c-carta-icons c-scale-hover">
                             <fa-icon [icon]="faCoins" data-toggle="modal" data-target="#pagadoModal"
-                                (click)="asignarValor(i)"></fa-icon>
+                                (click)="openCuentaModal()" (click)="asignarValorCuenta(i)" ></fa-icon>
                         </div>
                         <div class="c-carta-mesa">
-                            <fa-icon [icon]="faBreadSlice" size="3x"></fa-icon>
-                            <span class="fa-layers-text fa-inverse c-no-select"
+                            <fa-icon [icon]="faCalendar" size="3x"></fa-icon>
+                            <span class="fa-layers-text c-color c-no-select"
                                 style="font-weight:900; bottom: 10px;">{{m.numero_mesa}}</span>
                         </div>
                         <div class="c-carta-barra c-no-select c-text-white"
@@ -33,45 +39,50 @@
 
                     <ng-template #elseBlock>
                         <div class="c-carta-mesa c-scale-hover ">
-                            <fa-icon [icon]="faBreadSlice" size="3x" (click)="goTpv(i)"></fa-icon>
-                            <span class="fa-layers-text fa-inverse c-no-select"
+                            <fa-icon [icon]="faCalendar" size="3x" (click)="goTpv(i)"></fa-icon>
+                            <span class="fa-layers-text c-color c-no-select"
                                 style="font-weight:900; bottom: 10px;"
                                 (click)="goTpv(i)">{{m.numero_mesa}}</span>
                         </div>
                         <fa-icon [icon]="faTrash" class="c-carta-basura c-scale-hover"
-                            data-toggle="modal" data-target="#deleteModal"
-                            (click)="asignarValor(i)"></fa-icon>
+                            (click)="openDeleteMesaModal()" (click)="asignarValor(i)"></fa-icon>
                         <fa-icon [icon]="faUserEdit" class="c-carta-edit c-scale-hover"
-                            data-toggle="modal" data-target="#editModal" (click)="asignarValor(i)">
+                            (click)="openEditMesaModal()" (click)="asignarValor(i)">
                         </fa-icon>
                     </ng-template>
                 </div>
             </div>
         </div>
 
+
+
         <div class="col-6 col-sm-3 col-lg-2 my-2 ">
             <div class="card c-carta-div" style="border-radius: 20px;">
-                <div class="card-body text-center c-scale-hover">
-                    <fa-icon [icon]="faPlus" size="4x" class="c-scale-hover" data-toggle="modal"
-                        data-target="#addModal"></fa-icon>
+                <div class="card-body  c-scale-hover c-carta-add">
+                    <fa-icon [icon]="faPlus" size="4x" class="c-scale-hover"
+                        (click)="openCreateMesaModal()"></fa-icon>
                 </div>
             </div>
         </div>
 
+
+
+
+
         <!-- Modal BORRAR-->
-        <div id="deleteModal" class="modal fade" role="dialog">
+        <div id="deleteMesaModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">Papelera</h4>
                     </div>
                     <div class="modal-body">
                         <p>¿Desea borrar la mesa?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        <button type="button" class="btn btn-secondary"
                             (click)="deleteMesa()">Aceptar</button>
                         <button type="button" class="btn btn-primary"
                             data-dismiss="modal">Cancelar</button>
@@ -81,7 +92,7 @@
             </div>
         </div>
         <!-- Modal EDIT -->
-        <div id="editModal" class="modal fade" role="dialog">
+        <div id="editMesaModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -94,17 +105,18 @@
 
                             <div class="col-6"> <span class="c-no-select">Número de mesa</span>
                             </div>
-                            <div class="col-6"> <input class="input w-50" type="text"
-                                    [(ngModel)]="mesa.numero_mesa"></div>
+                            <div class="col-6"> <input class="input w-50" type="number"
+                                    id="inputNumeroMesaEdit" [(ngModel)]="mesa.numero_mesa"></div>
                             <div class="col-6"> <span class="c-no-select">Número de personas</span>
                             </div>
-                            <div class="col-6"> <input class="input w-50" type="text"
-                                    [(ngModel)]="mesa.numero_personas"></div>
+                            <div class="col-6"> <input class="input w-50" type="number"
+                                    id="inputNumeroPersonasEdit" [(ngModel)]="mesa.numero_personas">
+                            </div>
 
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        <button type="button" class="btn btn-secondary"
                             (click)="editMesa()">Aceptar</button>
                         <button type="button" class="btn btn-primary"
                             data-dismiss="modal">Cancelar</button>
@@ -115,20 +127,46 @@
         </div>
 
         <!-- Modal PAGADO-->
-        <div id="pagadoModal" class="modal fade" role="dialog">
+        <div id="cuentaModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Has pagado la cuenta</h4>
+                        <h4 class="modal-title c-no-select">Cuenta de la mesa número {{mesaCuenta.numero_mesa}}</h4>
                     </div>
-                    <div class="modal-body">
-                        <p>TO DO Factura</p>
+                    <div class="container-fluid">
+                        <div class="modal-body row">
+
+                            <table class="table c-table-fixed c-no-select">
+                                <thead>
+                                    <tr>
+                                        <th>Unidades</th>
+                                        <th>Nombre</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let p of comandaCuenta.comandasProductos;
+                                index as index">
+                                        <td>{{p.unidades_producto}}unid.</td>
+                                        <td>{{p.producto.nombre | titlecase}}</td>
+                                        <td>{{p.producto.precio | number:'1.2-2'}} €</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h4 class="c-precio col-12 c-no-select">Total {{getTotal()| number:'1.2-2'}} €</h4>
+
+                        </div>
                     </div>
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                            (click)="deleteComanda()">Aceptar</button>
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            (click)="deleteComanda()">Pagar</button>
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
 
@@ -138,7 +176,7 @@
 
 
         <!-- Modal ADD -->
-        <div id="addModal" class="modal fade" role="dialog">
+        <div id="createMesaModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
@@ -151,17 +189,18 @@
 
                             <div class="col-6"> <span class="c-no-select">Número de mesa</span>
                             </div>
-                            <div class="col-6"> <input class="input w-50" type="text"
-                                    [(ngModel)]="mesa.numero_mesa"></div>
+                            <div class="col-6"> <input class="input w-50" type="number"
+                                    id="inputNumeroMesaCreate" [(ngModel)]="mesa.numero_mesa"></div>
                             <div class="col-6"> <span class="c-no-select">Número de personas</span>
                             </div>
-                            <div class="col-6"> <input class="input w-50" type="text"
+                            <div class="col-6"> <input class="input w-50" type="number"
+                                    id="inputNumeroPersonasCreate"
                                     [(ngModel)]="mesa.numero_personas"></div>
 
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        <button type="button" class="btn btn-secondary"
                             (click)="addMesa()">Aceptar</button>
                         <button type="button" class="btn btn-primary"
                             data-dismiss="modal">Cancelar</button>
@@ -173,19 +212,20 @@
 
         <div id="salirModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-        
+
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title c-no-select">Volver al inicio</h4>
                     </div>
-        
+
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-12"> <span class="c-no-select">¿Está seguro de querer volver al
+                            <div class="col-12"> <span class="c-no-select">¿Está seguro de querer
+                                    volver al
                                     inicio?</span></div>
-        
-        
+
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -203,7 +243,3 @@
     <!--CIERRE ROW -->
 </div>
 <!--CIERRE CONTAINER-FLUID -->
-
-
-<button class="btn btn-danger" data-toggle="modal"
-                        data-target="#salirModal">Volver a Home</button>

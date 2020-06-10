@@ -1,0 +1,10 @@
+.c-alert-posicion-centrada {
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 55vh;
+    width: 50%;
+    z-index: 1;
+}

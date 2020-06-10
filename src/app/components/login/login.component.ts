@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsuarios()
+    $("#alertLogin").hide()
+
   }
 
 
@@ -84,6 +86,10 @@ export class LoginComponent implements OnInit {
           break;
       }
     } else {
+      this.password = "";
+      this.passwordAsterisco = "";
+      $("#alertLogin").show()
+      setTimeout(function () { $("#alertLogin").fadeOut() }, 3500);
 
     }
     // this.panelNumeros = !this.panelNumeros

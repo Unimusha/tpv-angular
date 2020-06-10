@@ -3,7 +3,6 @@ body {
 }
 
 ul {
-   
     scroll-behavior: smooth;
 }
 
@@ -11,24 +10,24 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
-
     font-size: 1.5rem;
 }
 
 ul li {
-   
     padding: 0;
     background: #333;
     color: #ddd;
     text-align: center;
     cursor: pointer;
 }
-li{ 
+
+li {
     height: 25vh;
+    width: 10rem;
 }
 
 .c-selected-list-item {
-    background: #a03232 !important;
+    background: #058405 !important;
 }
 
 .c-cocinero-comandas-body {
@@ -41,7 +40,8 @@ li{
 
 .c-table-fixed {
     width: 100%;
-    background-color: #f3f3f3;
+    background-color: rgb(250, 250, 250);
+;
 }
 
 .c-table-fixed tbody {
@@ -63,5 +63,21 @@ li{
     background-color: white;
 }
 
-/* width */
+.tr:nth-child(even)>td {
+    background-color: white;
+}
 
+.tr:nth-child(odd)>td {
+    background-color: rgb(227, 241, 227);
+}
+
+th {
+    color: #058405;
+}
+
+/* .c-datos>tr>td {
+    background-color: #333!important;
+    color:white!important;
+} */
+
+/* width */

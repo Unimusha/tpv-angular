@@ -28,7 +28,10 @@ export class CamareroComponent implements OnInit {
   id_mesa: number;
   usuario: any;
   mesa: any;
+  mesaCuenta: any;
+  listaMesas: any;
   comanda: any;
+  comandaCuenta: any;
   crearComanda: any;
 
   constructor(
@@ -38,19 +41,29 @@ export class CamareroComponent implements OnInit {
   ) {
     this.usuario = new Usuario(null, null, null, null);
     this.mesa = new Mesa(null, null, null, null);
-    this.comanda = new Comanda(null, null, null, null, null);
+    this.mesaCuenta = new Mesa(null, null, null, null);
+    this.comanda =[]
+    this.comandaCuenta=[];
     this.crearComanda = new Comanda(null, null, null, null, null);
+    this.listaMesas = [];
   }
 
   ngOnInit(): void {
     this.id_usuario = this._route.snapshot.params.id_usuario;
     this.getUsuario();
      setInterval(() => { this.getUsuario(); }, 5000);
+
+    this.usuario.sort(this.compare)
   }
 
   asignarValor(i) {
-    this.mesa = this.usuario.mesas[i];
+    this.mesa = this.listaMesas[i];
     this.comanda = this.mesa.comandas[0];
+    console.log(i)
+  }
+  asignarValorCuenta(i) {
+    this.mesaCuenta = this.listaMesas[i];
+    this.comandaCuenta = this.mesaCuenta.comandas[0];
     console.log(i)
   }
 
@@ -59,6 +72,9 @@ export class CamareroComponent implements OnInit {
     this._peticionesService.getUsuario(this.id_usuario).subscribe(
       result => {
         this.usuario = result;
+        this.listaMesas = this.usuario.mesas;
+        this.listaMesas.sort(this.compare)
+     
         //console.log(result)
         console.log(this.usuario)
       },
@@ -77,6 +93,10 @@ export class CamareroComponent implements OnInit {
       },
       error => {
         console.log(<any>error)
+      },
+      () => {
+        this.getUsuario()
+        $('#createMesaModal').modal('hide');
       }
     );
   }
@@ -89,6 +109,10 @@ export class CamareroComponent implements OnInit {
       error => {
         console.log(<any>error)
         this.getUsuario();
+      },
+      () => {
+        this.getUsuario()
+        $('#editMesaModal').modal('hide');
       }
     );
   }
@@ -100,6 +124,7 @@ export class CamareroComponent implements OnInit {
       error => {
         console.log(<any>error)
         this.getUsuario();
+        $('#deleteMesaModal').modal('hide');
       }
     );
   }
@@ -108,29 +133,20 @@ export class CamareroComponent implements OnInit {
     this._router.navigate(["/camarero/tpv/" + this.id_usuario + "/" + this.usuario.mesas[i].id_mesa])
   }
 
-  // addComanda(i) {
-   
-  //   this.crearComanda.id_mesa = this.usuario.mesas[i].id_mesa;
 
-  //   this._peticionesService.addComanda(this.crearComanda).subscribe(
-  //     result => {
-  //       console.log(result)
-  //       this.getUsuario();
-  //     },
-  //     error => {
-  //       console.log(<any>error)
-  //       this.getUsuario();
-  //     }
-  //   );
-  // }
   deleteComanda() {
-    this._peticionesService.deleteComanda(this.comanda.id_comanda).subscribe(
+    this._peticionesService.deleteComanda(this.comandaCuenta.id_comanda).subscribe(
       result => {
         console.log(result)
       },
       error => {
+ 
         console.log(<any>error)
         this.getUsuario();
+      },
+      () => {
+        this.getUsuario()
+
       }
     );
   }
@@ -138,4 +154,65 @@ export class CamareroComponent implements OnInit {
   redirectToHome() {
     this._router.navigate(["/"])
   }
+  compare(a, b) {
+    const bandA = a.numero_mesa;
+    const bandB = b.numero_mesa;
+
+    let comparison = 0;
+    if (bandA > bandB) {
+      comparison = 1;
+    } else if (bandA < bandB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+
+
+
+  openCreateMesaModal() {
+    $("#createMesaModal").one('shown.bs.modal', function (e) {
+      $('#inputNumeroMesaCreate').val("").focus()
+      $('#inputNumeroPersonasCreate').val("")
+    }).one('hidden.bs.modal', function (e) {
+    }).modal('show')
+  }
+
+  openEditMesaModal() {
+
+
+    $("#editMesaModal").one('shown.bs.modal', function (e) {
+      $('#inputNumeroMesaEdit').focus()
+    
+    }).one('hidden.bs.modal', function (e) {
+    }).modal('show');
+
+  }
+
+  openDeleteMesaModal() {
+    $("#deleteMesaModal").one('shown.bs.modal', function (e) {
+    }).one('hidden.bs.modal', function (e) {
+    }).modal('show');
+  } 
+
+
+  openCuentaModal() {
+    $("#cuentaModal").one('shown.bs.modal', function (e) {
+
+
+    }).one('hidden.bs.modal', function (e) {
+    }).modal('show')
+  }
+
+  getTotal() {
+    var total = 0;
+    if (this.comandaCuenta.comandasProductos!=null){
+    for (let i = 0; i < this.comandaCuenta.comandasProductos.length; i++) {
+      total += (this.comandaCuenta.comandasProductos[i].producto.precio * this.comandaCuenta.comandasProductos[i].unidades_producto);
+
+    }
+    }
+    return total
+  }
+  
 }
