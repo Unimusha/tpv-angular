@@ -116,8 +116,22 @@ export class BarmanComponent implements OnInit {
     return comparison;
   }
 
+  compare2(a, b) {
+    const bandA = a.id_comanda_producto;
+    const bandB = b.id_comanda_producto;
+
+    let comparison = 0;
+    if (bandA > bandB) {
+      comparison = 1;
+    } else if (bandA < bandB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   filtrarComandaBarraPanel() {
     this.comandaActual = this.listaFiltradaBarra[this.selected];
+    this.comandaActual.comandasProductos.sort(this.compare2)
     console.log(this.comandaActual)
     var self = this;
 

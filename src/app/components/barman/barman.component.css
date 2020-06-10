@@ -40,7 +40,6 @@ li {
 .c-table-fixed {
     width: 100%;
     background-color: rgb(250, 250, 250);
-
 }
 
 .c-table-fixed tbody {
@@ -72,7 +71,7 @@ li {
 }
 
 .tr:nth-child(odd)>td {
-    background-color: #AAC5E2;
+    background-color: #E2EBF5;
 }
 
 th {
@@ -80,3 +79,13 @@ th {
 }
 
 /* width */
+
+.c-nombre {
+    color: white;
+    background-color: #0052AA;
+    height: 5vh;
+    line-height: 5vh;
+    border-radius: 10px;
+    border: 1px solid #333;
+    text-align: center;
+}

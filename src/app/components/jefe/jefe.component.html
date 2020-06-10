@@ -50,7 +50,7 @@
                             <tbody>
                                 <tr *ngFor="let p of filterListaProductos(); trackBy:listaProductos.id_producto; index as index"
                                     (click)="selectedTable = index">
-                                    <td class="col-3">{{p.nombre | titlecase}}</td>
+                                    <td class="col-3">{{p.nombre}}</td>
                                     <td class="col-3">{{p.id_categoria}}</td>
                                     <td class="col-2">{{p.precio | number:'1.2-2'}} €</td>
                                     <td class="col-2">
@@ -448,7 +448,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12"> <span class="c-no-select">¿Desea borrar el producto
-                            <strong>{{producto.nombre | titlecase}}</strong>?</span></div>
+                            <strong>{{producto.nombre}}</strong>?</span></div>
                 </div>
                 <div class="modal-footer mt-2">
                     <button type="button" class="btn btn-primary"
@@ -491,7 +491,7 @@
                 <div class="modal-footer mt-2">
                     <button type="button" (click)="addCategoria(createCategoriaForm)"
                         [disabled]="createCategoriaForm.form.invalid"
-                        class="btn btn-primary">Craar</button>
+                        class="btn btn-primary">Crear</button>
                     <button type="button" class="btn btn-secondary"
                         (click)="createCategoriaForm.reset()" data-dismiss="modal">Cancelar</button>
                 </div>
@@ -552,7 +552,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12"> <span class="c-no-select">¿Desea borrar la categoría
-                            <strong>{{cat.nombre | titlecase}}</strong>?</span></div>
+                            <strong>{{cat.nombre}}</strong>?</span></div>
                 </div>
                 <div class="modal-footer mt-2">
                     <button type="button" class="btn btn-primary" data-dismiss="modal"

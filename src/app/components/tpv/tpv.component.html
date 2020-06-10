@@ -24,13 +24,13 @@
                                     {{t.unidades}}ud.</td>
                                 <td class="col-3"
                                     [ngClass]="{'c-selected-table': selected == index}">
-                                    {{t.nombre | titlecase}}</td>
+                                    {{t.nombre }}</td>
                                 <td class="col-6"
                                     [ngClass]="{'c-selected-table': selected == index}">
 
                                     <span
                                         *ngIf="t.comentario; then thenBlock else elseBlock"></span>
-                                    <ng-template #thenBlock>{{t.comentario | titlecase}}
+                                    <ng-template #thenBlock>{{t.comentario }}
                                     </ng-template>
                                     <ng-template #elseBlock>-</ng-template>
 
@@ -126,7 +126,7 @@
                                 [ngClass]="{'c-selected-table': categoriaActual == index}">
                                 <div class="card-body">
                                     <p class="card-title c-no-select c-texto-cartas">
-                                        {{c.nombre | titlecase}}</p>
+                                        {{c.nombre }}</p>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                             <div class="card w-100 d-flex align-items-center c-tarjeta-productos"
                                 (click)="addProductoTabla(p.id_producto, p.nombre, p.precio)">
                                 <div class="card-body">
-                                    <p class="card-title c-no-select">{{p.nombre | titlecase}}</p>
+                                    <p class="card-title c-no-select">{{p.nombre}}</p>
                                 </div>
                             </div>
                         </div>

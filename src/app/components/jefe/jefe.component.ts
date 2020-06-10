@@ -141,9 +141,7 @@ export class JefeComponent implements OnInit {
     );
   }
   addProducto(form) {
-    this.producto.nombre = this.producto.nombre.toLowerCase().replace(/\b[a-z]/g, function (letter) {
-      return letter.toUpperCase();
-    });
+    this.producto.nombre;
     this.producto.id_producto = null;
     this.producto.id_categoria = +this.producto.id_categoria
     console.log(this.producto)
@@ -260,9 +258,7 @@ export class JefeComponent implements OnInit {
   }
   addCategoria(form) {
 
-    this.cat.nombre = this.cat.nombre.toLowerCase().replace(/\b[a-z]/g, function (letter) {
-      return letter.toUpperCase();
-    });
+    this.cat.nombre;
     this.cat.id_categoria = null;
     console.log(this.cat)
 
@@ -375,6 +371,7 @@ export class JefeComponent implements OnInit {
     this.usuario.apellidos = this.usuario.apellidos.toLowerCase().replace(/\b[a-z]/g, function (letter) {
       return letter.toUpperCase();
     });
+    this.usuario.id_usuario = null;
 
     console.log(this.usuario)
     this._peticionesService.addUsuario(this.usuario).subscribe(

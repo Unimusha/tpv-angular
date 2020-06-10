@@ -45,7 +45,7 @@
                         <td class="col-4"> {{c.producto.nombre}} </td>
                         <td class="col-6">
                             <span *ngIf="c.comentario; then thenBlock else elseBlock"></span>
-                            <ng-template #thenBlock>{{c.comentario | titlecase}}</ng-template>
+                            <ng-template #thenBlock>{{c.comentario }}</ng-template>
                             <ng-template #elseBlock>-</ng-template>
                         </td>
                     </tr>
@@ -57,6 +57,8 @@
 
             <div class="c-alto-50">
 
+
+                <h4 class="c-nombre c-no-select">{{usuario.nombre}}</h4>
                 <table class="c-datos">
                     <tr>
                         <td class="col-6">
@@ -99,7 +101,7 @@
             <div class="c-alto-20 ">
                 <button class="btn btn-success w-100 my-2" data-toggle="modal"
                     data-target="#completarComandaCocinaModal">Llamar
-                    Camarero</button>
+                    {{comandaActual.nombre_camarero}}</button>
                 <button class="btn btn-secondary     w-100" data-toggle="modal"
                     data-target="#salirModal">Salir</button>
 
@@ -116,13 +118,14 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title c-no-select">Comanda lista para recojer</h4>
+                        <h4 class="modal-title c-no-select">Comida lista para recojer</h4>
                     </div>
 
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12"> <span class="c-no-select">¿Desea llamar al
-                                    camarero {{comandaActual.nombre_camarero}}?</span></div>
+                                    camarero <strong>{{comandaActual.nombre_camarero}}</strong> para buscar la <strong>mesa
+                                        {{comandaActual.numero_mesa}}</strong>?</span></div>
 
 
                         </div>
