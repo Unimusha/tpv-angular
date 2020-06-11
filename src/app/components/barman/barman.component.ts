@@ -181,4 +181,22 @@ export class BarmanComponent implements OnInit {
     this._router.navigate(["/"])
   }
 
+  getHoraCorrecta(hora) {
+    let horaCorrecta;
+    let num = +hora.substring(0, 2)
+
+    if (num == 23) {
+      horaCorrecta = "01" + hora.substring(2)
+    } else if (num == 24) {
+      horaCorrecta = "02" + hora.substring(2)
+    } else if (num < 8) {
+      num += 2;
+      horaCorrecta = "0" + num + hora.substring(2)
+    } else {
+      num += 2;
+      horaCorrecta = "" + num + hora.substring(2)
+    }
+    return horaCorrecta;
+  }
+  
 }

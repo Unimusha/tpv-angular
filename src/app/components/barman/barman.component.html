@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="c-cocinero-comandas-hora">
                                     <fa-icon [icon]="faClock"></fa-icon>
-                                    {{c.hora_creacion_comanda}}
+                                    {{getHoraCorrecta(c.hora_creacion_comanda)}}
                                 </div>
 
                             </div>
@@ -95,14 +95,11 @@
                             <fa-icon [icon]="faClock"></fa-icon>
                         </td>
                         <td class="col-6">
-                            <h6>{{comandaActual.hora_creacion_comanda}}</h6>
+                            <h6>{{getHoraCorrecta(comandaActual.hora_creacion_comanda)}}</h6>
                         </td>
-
                     </tr>
 
                 </table>
-
-
             </div>
 
 
@@ -129,7 +126,10 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12"> <span class="c-no-select">¿Desea llamar al
-                                    camarero <strong>{{comandaActual.nombre_camarero}}</strong> para buscar la <strong>mesa {{comandaActual.numero_mesa}}</strong>?</span></div>
+                                    camarero
+                                    <strong>{{getHoraCorrecta(comandaActual.nombre_camarero)}}</strong>
+                                    para buscar la <strong>mesa
+                                        {{comandaActual.numero_mesa}}</strong>?</span></div>
 
 
                         </div>

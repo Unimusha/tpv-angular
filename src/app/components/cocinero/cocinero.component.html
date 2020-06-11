@@ -18,8 +18,7 @@
                                 </div>
                                 <div class="c-cocinero-comandas-hora">
                                     <fa-icon [icon]="faClock"></fa-icon>
-                                    {{c.hora_creacion_comanda}}
-
+                                    {{getHoraCorrecta(c.hora_creacion_comanda)}}
                                 </div>
 
                             </div>
@@ -88,7 +87,7 @@
 
                     <tr>
                         <td class="col-6"><fa-icon [icon]="faClock"></fa-icon></td>
-                        <td class="col-6"><h6>{{comandaActual.hora_creacion_comanda}}</h6></td>
+                        <td class="col-6"><h6>{{getHoraCorrecta(comandaActual.hora_creacion_comanda)}}</h6></td>
 
                     </tr>
 
